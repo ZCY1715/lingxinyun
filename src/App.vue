@@ -7,7 +7,6 @@ import Demo from './components/demo.vue'
   <span>你好</span>
   <span>你好</span>
   <span>你好</span>
-  <span>你好</span>
 </template>
 
 <style>
