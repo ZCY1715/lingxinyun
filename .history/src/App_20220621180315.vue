@@ -5,9 +5,6 @@ import Demo from './components/demo.vue'
 <template>
   <Demo/>
   <span>你好</span>
-  <span>你好</span>
-  <span>你好</span>
-  <span>你好</span>
 </template>
 
 <style>
