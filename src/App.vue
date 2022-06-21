@@ -1,11 +1,18 @@
-<script setup>
-import Demo from './components/demo.vue'
+<script>
+import SideBar from './components/SideBar.vue'
+
+
 </script>
 
 <template>
-  <Demo/>
+  <SideBar />
 </template>
 
 <style>
-
+html,
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 </style>
