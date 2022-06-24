@@ -23,6 +23,10 @@ body {
   position: absolute;
 }
 
+:root {
+  --theme-color: #faa66e;
+}
+
 main {
   position: relative;
   top: 60px;
@@ -39,6 +43,6 @@ main {
 }
 
 .svgContainerHover svg:hover {
-  fill: orange;
+  fill: var(--theme-color);
 }
 </style>

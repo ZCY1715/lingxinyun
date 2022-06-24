@@ -136,15 +136,17 @@ export default {
 .menus span {
   padding: 3px 5px 3px 5px;
   border-radius: 5px;
-  transition: .5s;
+  transition: .2s;
 }
 
 .menus span:hover {
-  background-color: rgba(255, 166, 0, 0.7);
+  background-color: var(--theme-color);
+  color: #fff;
 }
 
 .menus .menuSelect {
-  background-color: rgba(255, 166, 0, 0.7);
+  background-color: var(--theme-color);
+  color: #fff;
 }
 
 .avatar {
