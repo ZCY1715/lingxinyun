@@ -1,11 +1,13 @@
-<script>
-import SideBar from './components/SideBar.vue'
-
-
+<script setup>
+import Header from "./components/Header/index.vue"
 </script>
 
 <template>
-  <SideBar />
+  <Header />
+  <main>
+    <router-view></router-view>
+  </main>
+
 </template>
 
 <style>
@@ -14,5 +16,29 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Ubuntu", serif;
+}
+
+#app {
+  position: absolute;
+}
+
+main {
+  position: relative;
+  top: 60px;
+}
+
+.svgContainer svg {
+  width: inherit;
+  height: inherit;
+  opacity: .7;
+}
+
+.svgContainerHover svg {
+  transition: .3s;
+}
+
+.svgContainerHover svg:hover {
+  fill: orange;
 }
 </style>
