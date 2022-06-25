@@ -1,11 +1,17 @@
 <script>
-import Letter from './letter.svg?vueComponent'
-import Bell from './bell.svg?vueComponent'
+import Search from './search.svg?vueComponent'
+import UserBox from './UserBox.vue'
+import MessageBox from './MessageBox.vue'
+import LetterBox from './LetterBox.vue'
+import { markRaw } from 'vue'
+
+markRaw(Search)
 
 export default {
   data() {
     return {
-      LogoName: "聆心云",
+      Search: Search,
+      searchValue: '',
       menuList: [
         {
           name: "游戏",
@@ -27,19 +33,13 @@ export default {
           path: "/news",
           select: false,
         }
-      ],
-      avatarURL: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-62793fd8-63a8-4d63-9f21-0986ead6de14/f7d2b827-537c-4636-a4b7-a8866f0f7af3.jpg",
-      haveMessage: true,
-      LetterNum: 8,
+      ]
     }
   },
-  components: { Letter, Bell },
+  components: { UserBox, MessageBox, LetterBox },
   methods: {
-    enterMessagePage() {
-
-    },
-    enterLetterPage() {
-
+    search() {
+      console.log(this.searchValue)
     }
   },
   watch: {
@@ -62,7 +62,7 @@ export default {
   <el-header :class="$style.container">
     <div>
       <span :class="$style.logo" @click="() => { $router.push('/') }">
-        {{ LogoName }}
+        聆心云
       </span>
       <div :class="$style.menus" :style="{ '--w': menuList.length }">
         <span v-for="(menu, index) of menuList" :key="index" @click="() => { $router.push(menu.path) }"
@@ -72,19 +72,13 @@ export default {
       </div>
     </div>
     <div>
-      <div :class="$style.avatar">
-        <img :src="avatarURL" />
-      </div>
-      <div :class="['svgContainer', 'svgContainerHover', $style.bell]" @click="enterMessagePage">
-        <div v-if="haveMessage" :class="$style.showMessage"></div>
-        <Bell />
-      </div>
-      <div :class="['svgContainer', 'svgContainerHover', $style.letter]" @click="enterLetterPage">
-        <div v-if="LetterNum && LetterNum !== 0" :class="$style.showLetter">
-          <span>{{ LetterNum > 9 ? "•••" : LetterNum }}</span>
-        </div>
-        <Letter />
-      </div>
+      <el-input class="w-50 m-2" v-model="searchValue" placeholder="搜索..." :suffix-icon="Search"
+        @keyup.enter="search" />
+    </div>
+    <div>
+      <UserBox />
+      <MessageBox />
+      <LetterBox />
     </div>
   </el-header>
 </template>
@@ -92,13 +86,16 @@ export default {
 <style module>
 .container {
   position: fixed;
+  top: 0;
   z-index: 1;
   width: 100vw;
   border-bottom: 2px #eee solid;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  background-color: #fffd;
+  box-shadow: #ccc 1px 1px 1px;
+  border-radius: 0 0 5px 5px;
 }
 
 .container>div:nth-child(1) {
@@ -107,7 +104,7 @@ export default {
   align-items: center;
 }
 
-.container>div:nth-child(2) {
+.container>div:nth-child(3) {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -147,63 +144,5 @@ export default {
 .menus .menuSelect {
   background-color: var(--theme-color);
   color: #fff;
-}
-
-.avatar {
-  height: 40px;
-  width: 40px;
-}
-
-.avatar img {
-  height: 100%;
-  width: 100%;
-  border-radius: 50%;
-  border: 1px #eee solid;
-  transition: 1s;
-  cursor: pointer;
-}
-
-.avatar img:hover {
-  transform: rotate(360deg);
-}
-
-.letter {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  cursor: pointer;
-}
-
-.bell {
-  width: 20px;
-  height: 20px;
-  position: relative;
-  cursor: pointer;
-}
-
-.showMessage {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  top: -5px;
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  border-radius: 50%;
-}
-
-.showLetter {
-  position: absolute;
-  z-index: 2;
-  right: -5px;
-  width: 15px;
-  height: 15px;
-  background-color: red;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 13px;
 }
 </style>

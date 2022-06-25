@@ -28,9 +28,9 @@ const routes = [
   },
 ]
 
-const Routers = createRouter({
+const Router = createRouter({
   history: createWebHistory(),
   routes
 })
 
-export default Routers
+export default Router
