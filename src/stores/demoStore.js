@@ -2,7 +2,9 @@ import { defineStore } from 'pinia'
 
 const demoStore = defineStore("demo", {
   state: () => {
-
+    return {
+      count: 1,
+    }
   },
 
   getters: {
@@ -19,7 +21,7 @@ const demoStore = defineStore("demo", {
       {
         key: "",
         storage: localStorage, // sessionStorage 
-        // paths: [] 
+        paths: ["count"] 
       }
     ]
   }
