@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script>
 import MessageHeader from '../../components/Common/MessageHeader.vue'
 import MessageRecord from './MessageRecord.vue'
@@ -26,3 +27,8 @@ export default {
 
 <style module>
 </style>
+=======
+<template>
+  <div>HomePage</div>
+</template>
+>>>>>>> 51fa8af1be1a5194700a7c71d5ba4e3e4bed0352
