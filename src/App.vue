@@ -38,10 +38,10 @@ body {
   position: absolute;
 }
 
-main {
+.el-main {
   position: relative;
   top: 60px;
-  height: 400px;
+  min-height: calc(100vh - 240px);
 }
 
 :root {

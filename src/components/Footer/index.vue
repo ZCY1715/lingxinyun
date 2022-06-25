@@ -1,7 +1,3 @@
-<script>
-
-</script>
-
 <template>
   <el-footer :class="$style.container">
     <div :class="$style.main">
@@ -16,30 +12,27 @@
           <span>山东大学</span>
         </div>
       </div>
-      <div>
+      <div :class="$style.part2">
         <div>
           <span>更多联系方式</span>
           <span>
-            <span>致电</span>
-            <span>0531-6666-8888转8002</span>
+            致电&nbsp;&nbsp;0531-6666-8888转8002
           </span>
           <span>
-            <span>办公时间</span>
-            <span>08:30-17:30</span>
+            办公时间&nbsp;&nbsp;08:30-17:30
           </span>
         </div>
         <div>
           <span>
-            <span>办公地址</span>
-            <span>山东省济南市历下区鑫盛大厦2号楼16层</span>
+            办公地址&nbsp;&nbsp;山东省济南市历下区鑫盛大厦2号楼16层
           </span>
         </div>
       </div>
       <div class="cutLineX"></div>
-      <div>
+      <div :class="$style.part3">
         <div>
           <span>Copyright © 2011-2022 聆心云（山东）智能科技有限公司 保留所有权利</span>
-          <span>鲁ICP备20032465 工业和信息化部备案</span>
+          <span>鲁ICP备20032465&nbsp;&nbsp;工业和信息化部备案</span>
         </div>
         <div>
           <span>隐私政策</span>
@@ -66,7 +59,7 @@
 }
 
 .container span {
-  opacity: .6;
+  opacity: .4;
   font-size: 14px;
 }
 
@@ -95,13 +88,47 @@
   opacity: 1;
 }
 
-.part1>div:nth-child(1)>span .part1>div:nth-child(2)>span:not(1) {
+.part1>div:nth-child(1)>span:not(:first-child),
+.part1>div:nth-child(2)>span:not(:first-child) {
   padding: 3px 0 3px 0;
 }
 
-.part1>div:nth-child(2)>span:nth-child(1) {}
+.part2 {
+  display: flex;
+  margin-top: 25px;
+}
 
-.part1>div:nth-child(1) {
-  width: 500px;
+.part2>div:nth-child(1) {
+  display: flex;
+  align-items: center;
+}
+
+.part2>div:nth-child(1) span {
+  margin-right: 30px;
+}
+
+.part3 {
+  display: flex;
+}
+
+.part3>div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+}
+
+.part3>div:nth-child(1) span {
+  padding: 6px 0 6px 0;
+}
+
+.part3>div:nth-child(2) {
+  display: flex;
+  height: 20px;
+  padding-top: 6px;
+}
+
+.part1>div:nth-child(1),
+.part2>div:nth-child(1),
+.part3>div:nth-child(1) {
+  width: 550px;
 }
 </style>
