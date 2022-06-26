@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-<script >
-import Demo from './components/demo.vue'
-import Sider from './components/Sider/SiderBar.vue'
-
-export default {
-  components: {
-    Sider
-  },
-
-=======
 <script>
 import Header from "./components/Header/index.vue"
 import Footer from "./components/Footer/index.vue"
@@ -22,25 +11,15 @@ export default {
       setScrollTop(0)
     }
   }
->>>>>>> 51fa8af1be1a5194700a7c71d5ba4e3e4bed0352
 }
 </script>
 
 <template>
-<<<<<<< HEAD
-  <Sider></Sider>
-  <el-main>
-    <router-view></router-view>
-  </el-main>
-  
-
-=======
   <Header />
   <el-main>
     <router-view></router-view>
   </el-main>
   <Footer />
->>>>>>> 51fa8af1be1a5194700a7c71d5ba4e3e4bed0352
 </template>
 
 <style>
@@ -124,25 +103,10 @@ body {
   background-color: #ddd;
 }
 
-<<<<<<< HEAD
-/* 定义全局样式 重置样式*/
-html,
-body {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Ubuntu", serif;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-
-=======
 .cutLineY {
   width: 1px;
   height: 100%;
   margin: 0 10px 0 10px;
   background-color: #ddd;
 }
->>>>>>> 51fa8af1be1a5194700a7c71d5ba4e3e4bed0352
 </style>
