@@ -19,5 +19,5 @@ export default defineConfig({
       exclude: ['node_modules/**']
     })
   ],
-  base: './'
+  base: './dist/'
 })
