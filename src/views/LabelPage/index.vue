@@ -20,7 +20,7 @@ export default {
 </script>
 
 <template>
-  <div>这是主页</div>
+  <div>这是标签页面</div>
   
 </template>
 

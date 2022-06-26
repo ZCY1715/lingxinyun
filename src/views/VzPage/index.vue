@@ -22,7 +22,7 @@
 </script>
 
 <template>
-<h1>这是登录页面</h1>
+<h1>这是可视化页面</h1>
 </template>
 
 <style module>

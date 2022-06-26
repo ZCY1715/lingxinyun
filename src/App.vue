@@ -1,6 +1,6 @@
 <script >
 import Demo from './components/demo.vue'
-import Sider from './components/Sider/SiderBar.vue'
+import Sider from './components/Sider/SideBar.vue'
 
 export default {
   components: {
@@ -11,10 +11,15 @@ export default {
 </script>
 
 <template>
-  <Sider></Sider>
+<el-container>
+<el-aside><Sider></Sider></el-aside>
+  
   <el-main>
     <router-view></router-view>
   </el-main>
+
+</el-container>
+
   
 
 </template>
@@ -30,8 +35,21 @@ body {
   padding: 0;
   font-family: "Ubuntu", serif;
   overflow-x: hidden;
+  overflow-y:hidden;
   scroll-behavior: smooth;
 }
 
+.el-aside {
+  overflow-y:hidden;
+
+}
+
+
+.iconfont {
+  font-size: 17px;
+  font-weight: 600;
+  
+
+}
 
 </style>
