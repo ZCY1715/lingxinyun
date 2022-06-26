@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       messages: [],
-      isLoading: false,
+      isLoading: true,
     }
   },
   components: { Bell, Loading, Upload },
@@ -20,12 +20,21 @@ export default {
   created() {
     const store = useStore()
     this.messages = store.userInfo.messages
+  },
+  methods: {
+    doWhenShow() {
+      if (!this.isLoading) return
+      setTimeout(() => {
+        this.isLoading = false
+      }, 1000)
+    }
   }
+
 }
 </script>
 
 <template>
-  <el-popover placement="bottom-start" :width="400" trigger="click">
+  <el-popover placement="bottom-start" :width="400" trigger="click" @show="doWhenShow">
     <template #reference>
       <div :class="['svgContainer', 'svgContainerHover', $style.bell]" @click="enterMessagePage">
         <div v-if="hasMessage" :class="$style.showMessage"></div>

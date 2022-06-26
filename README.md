@@ -1,7 +1,3 @@
-# Vue 3 + Vite
+聆心云元宇宙文创平台
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+[![OSCS Status](https://www.oscs1024.com/platform/badge/ZCY1715/lingxinyun.svg?size=small)](https://www.oscs1024.com/project/ZCY1715/lingxinyun?ref=badge_small)

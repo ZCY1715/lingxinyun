@@ -4,22 +4,36 @@ import Footer from "./components/Footer/index.vue"
 import { setScrollTop } from './utils'
 
 export default {
+  data() {
+    return {
+      excludePage: ['/login'],
+      useCommonLayout: false
+    }
+  },
   components: { Header, Footer },
   watch: {
-    // 页面跳转时自动回到顶部
-    $route() {
+    $route(to) {
+      this.useCommonLayout = !this.excludePage.includes(to.path)
       setScrollTop(0)
     }
+  },
+  created() {
+
   }
 }
 </script>
 
 <template>
-  <Header />
-  <el-main>
+  <template v-if="useCommonLayout">
+    <Header />
+    <el-main>
+      <router-view></router-view>
+    </el-main>
+    <Footer />
+  </template>
+  <template v-else>
     <router-view></router-view>
-  </el-main>
-  <Footer />
+  </template>
 </template>
 
 <style>

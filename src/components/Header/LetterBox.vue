@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       letters: [],
-      isLoading: false,
+      isLoading: true,
     }
   },
   components: { Letter, Loading },
@@ -22,13 +22,21 @@ export default {
     hasLetter() {
       return this.letters.length !== 0
     }
+  },
+  methods: {
+    doWhenShow() {
+      if (!this.isLoading) return
+      setTimeout(() => {
+        this.isLoading = false
+      }, 1000)
+    }
   }
 }
 
 </script>
 
 <template>
-  <el-popover placement="bottom-start" :width="400" trigger="click">
+  <el-popover placement="bottom-start" :width="400" trigger="click" @show="doWhenShow">
     <template #reference>
       <div :class="['svgContainer', 'svgContainerHover', $style.letter]" @click="enterLetterPage">
         <div v-if="hasLetter" :class="$style.showLetter">
