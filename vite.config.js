@@ -18,5 +18,6 @@ export default defineConfig({
     svgSprites({
       exclude: ['node_modules/**']
     })
-  ]
+  ],
+  base: './'
 })
