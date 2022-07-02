@@ -14,3 +14,18 @@ export function getScrollTop() {
 export function setScrollTop(num) {
   window.scrollTo({ top: num, behavior: 'smooth' })
 }
+
+// 获取中文首字母
+export function searchFirstLetter(word, callback) {
+  if (!String.prototype.localeCompare)
+    callback(null);
+  let letters = "*abcdefghjklmnopqrstwxyz".split('');
+  let zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
+  letters.forEach((letter, i) => {
+    if ((!zh[i - 1] || zh[i - 1].localeCompare(word, "zh") <= 0) && word.localeCompare(zh[i], "zh") == -1) {
+      callback(letter.toUpperCase())
+    }
+  })
+}
+
+

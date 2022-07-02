@@ -1,5 +1,5 @@
 <script>
-import Search from './search.svg?vueComponent'
+import Search from '../../assets/svgs/search.svg?vueComponent'
 import UserBox from './UserBox.vue'
 import MessageBox from './MessageBox.vue'
 import LetterBox from './LetterBox.vue'
@@ -36,10 +36,12 @@ export default {
       ]
     }
   },
+  props: ["hasSearch"],
   components: { UserBox, MessageBox, LetterBox },
   methods: {
     search() {
-      console.log(this.searchValue)
+      this.$router.push({ name: "SearchPage", query: { q: this.searchValue } })
+      this.searchValue = ''
     }
   },
   watch: {
@@ -61,7 +63,7 @@ export default {
 <template>
   <el-header :class="$style.container">
     <div>
-      <span :class="$style.logo" @click="() => { $router.push('/') }">
+      <span :class="$style.logo" @click="() => { $router.push({ name: 'HomePage' }) }">
         聆心云
       </span>
       <div :class="$style.menus" :style="{ '--w': menuList.length }">
@@ -72,8 +74,8 @@ export default {
       </div>
     </div>
     <div>
-      <el-input class="w-50 m-2" v-model="searchValue" placeholder="搜索..." :suffix-icon="Search"
-        @keyup.enter="search" />
+      <el-input v-model="searchValue" placeholder="搜索..." :suffix-icon="Search" @keyup.enter="search"
+        v-if="hasSearch" />
     </div>
     <div>
       <UserBox />

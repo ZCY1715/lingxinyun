@@ -6,33 +6,44 @@ import { setScrollTop } from './utils'
 export default {
   data() {
     return {
-      excludePage: ['/login'],
-      useCommonLayout: false
+      noHeaderPages: ['/login'],
+      noFooterPages: ['/login'],
+      noSearchPage: ['/search'],
+      currentRoute: '',
+
     }
   },
   components: { Header, Footer },
-  watch: {
-    $route(to) {
-      this.useCommonLayout = !this.excludePage.includes(to.path)
-      setScrollTop(0)
+  computed: {
+    hasHeader() {
+      return !this.noHeaderPages.includes(this.currentRoute)
+    },
+    hasFooter() {
+      return !this.noFooterPages.includes(this.currentRoute)
+    },
+    hasSearch() {
+      return !this.noSearchPage.includes(this.currentRoute)
     }
   },
-  created() {
-
+  watch: {
+    $route(to) {
+      this.currentRoute = to.path
+      setScrollTop(0)
+    }
   }
 }
 </script>
 
 <template>
-  <template v-if="useCommonLayout">
-    <Header />
-    <el-main>
-      <router-view></router-view>
-    </el-main>
-    <Footer />
+  <template v-if="hasHeader">
+    <Header :has-search="hasSearch" />
   </template>
-  <template v-else>
+
+  <el-main>
     <router-view></router-view>
+  </el-main>
+  <template v-if="hasFooter">
+    <Footer />
   </template>
 </template>
 
@@ -55,7 +66,13 @@ body {
 .el-main {
   position: relative;
   top: 60px;
-  min-height: calc(100vh - 240px);
+  min-height: 100vh;
+  margin-bottom: 100px;
+  background-color: #eee;
+}
+
+.el-main::-webkit-scrollbar {
+  display: none;
 }
 
 :root {
@@ -65,13 +82,13 @@ body {
 
 ::-webkit-scrollbar {
   width: 3px;
+  height: 3px;
   background: #eee;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #aaa;
-  border-radius: 100%;
 }
 
 @keyframes Swing {

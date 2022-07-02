@@ -1,6 +1,6 @@
 <script>
 import useStore from "../../stores"
-import Letter from './letter.svg?vueComponent'
+import Letter from '../../assets/svgs/letter.svg?vueComponent'
 import Loading from "../Loading.vue"
 
 export default {
@@ -13,7 +13,7 @@ export default {
   components: { Letter, Loading },
   created() {
     const store = useStore()
-    this.letters = store.userInfo.letters
+    this.letters = store.letters
   },
   computed: {
     LetterNum() {

@@ -1,6 +1,6 @@
 <script>
-import Bell from './bell.svg?vueComponent'
-import Upload from './upload.svg?vueComponent'
+import Bell from '../../assets/svgs/bell.svg?vueComponent'
+import Upload from '../../assets/svgs/upload.svg?vueComponent'
 import Loading from '../Loading.vue'
 import useStore from '../../stores'
 
@@ -19,7 +19,7 @@ export default {
   },
   created() {
     const store = useStore()
-    this.messages = store.userInfo.messages
+    this.messages = store.messages
   },
   methods: {
     doWhenShow() {

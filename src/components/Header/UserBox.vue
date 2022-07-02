@@ -17,7 +17,7 @@ export default {
 <template>
   <el-popover placement="bottom-start" :width="300" trigger="hover">
     <template #reference>
-      <div :class="$style.avatar">
+      <div :class="$style.avatar" @click="() => { $router.push({ name: 'UserPage' }) }">
         <img :src="userInfo.avatarURL" />
       </div>
     </template>

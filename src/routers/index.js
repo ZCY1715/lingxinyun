@@ -26,6 +26,17 @@ const routes = [
     name: "NewsPage",
     component: () => import("../views/NewsPage/index.vue")
   },
+  {
+    path: "/user",
+    name: "UserPage",
+    component: () => import("../views/UserPage/index.vue")
+  },
+  {
+    path: "/search",
+    name: "SearchPage",
+    props: route => ({ q: route.query.q }),
+    component: () => import("../views/SearchPage/index.vue")
+  }
 ]
 
 const Router = createRouter({
