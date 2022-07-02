@@ -20,7 +20,7 @@ export default {
 </script>
 
 <template>
-  <div>这是主页</div>
+  <message-header></message-header>
   
 </template>
 

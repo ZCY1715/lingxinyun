@@ -22,7 +22,7 @@
 </script>
 
 <template>
-<h1>这是资金页面</h1>
+<h1>注册页面</h1>
 </template>
 
 <style module>

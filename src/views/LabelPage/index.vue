@@ -1,8 +1,4 @@
 <script>
-import MessageHeader from '../../components/Common/MessageHeader.vue'
-import MessageRecord from './MessageRecord.vue'
-import PersonalMessage from './PersonalMessage.vue'
-import AddDialog from './AddDialog.vue'
 export default {
   data() {
     return {}
@@ -10,10 +6,7 @@ export default {
 
 
   components: {
-    MessageHeader,
-    MessageRecord,
-    PersonalMessage,
-    AddDialog
+   
   },
 
 }

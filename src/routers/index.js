@@ -14,6 +14,7 @@ const routes = [
   { path: '/vz', name: 'VzPage', component: () => import('../views/VzPage/index.vue') },
   { path: '/forum', name: 'ForumPage', component: () => import('../views/ForumPage/index.vue') },
   { path: '/broswer', name: 'BroswerPage', component: () => import('../views/BroswerPage/index.vue') },
+
   
   { path: '/:pathMatch(.*)', redirect:'/login' },
 
