@@ -83,16 +83,16 @@
 const SIZE = 9 * 1024 * 1024; //设置文件切片大小 10M
 
 export default {
-  name: "DataEntry",
+  
   data() {
     return {
       myReg: "eeg/txt/exe",
       cardinfo: [
-        { name: "采集时间:", id: 0, unit: "" ,data:""},
-        { name: "通道数:", id: 1, unit: "个" ,data:""},
-        { name: "采样频率:", id: 2, unit: "HZ",data:"" },
-        { name: "最低频率:", id: 3, unit: "HZ" ,data:""},
-        { name: "最高频率:", id: 4, unit: "HZ" ,data:""},
+        { name: ":", id: 0, unit: "" ,data:""},
+        { name: ":", id: 1, unit: "个" ,data:""},
+        { name: ":", id: 2, unit: "",data:"" },
+        { name: ":", id: 3, unit: "" ,data:""},
+        { name: ":", id: 4, unit: "" ,data:""},
       ],
       isShowing: false,
       isShower: true,

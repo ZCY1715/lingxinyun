@@ -1,8 +1,29 @@
 import { createRouter, createWebHistory, createWebHashHistory } from "vue-router"
 
 const routes = [
-  { path: '/', redirect: '/home' },
-  { path: '/login', name: 'LoginPage', component: () => import('../views/LoginPage/index.vue') },
+  { path: '/', redirect: '/login' },
+  {
+    path: '/login', name: 'LoginPage',redirect:'/login/registerOne', component: () => import('../views/LoginPage/index.vue'),
+    children: [
+      {
+        path: '/login/registerOne',
+        name: 'registerOne',
+        component: () => import('../views/LoginPage/registerStepOne.vue')
+
+      },
+      {
+        path: '/login/registerTwo',
+        name: 'registerTwo',
+        component: () => import('../views/LoginPage/registerStepTwo.vue')
+      },
+      {
+        path: '/login/loginPage',
+        name: 'loginPage',
+        component: () => import('../views/LoginPage/login.vue')
+      }
+    ]
+
+  },
   { path: '/home', name: 'HomePage', component: () => import('../views/HomePage/index.vue') },
   { path: '/dailytask', name: 'DailyTaskPage', component: () => import('../views/DailyTaskPage/index.vue') },
   { path: '/filemanage', name: 'FileManagePage', component: () => import('../views/FileManagePage/index.vue') },
@@ -15,8 +36,8 @@ const routes = [
   { path: '/forum', name: 'ForumPage', component: () => import('../views/ForumPage/index.vue') },
   { path: '/broswer', name: 'BroswerPage', component: () => import('../views/BroswerPage/index.vue') },
 
-  
-  { path: '/:pathMatch(.*)', redirect:'/login' },
+
+  { path: '/:pathMatch(.*)', redirect: '/login' },
 
 
 ]
