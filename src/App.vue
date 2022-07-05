@@ -48,19 +48,18 @@ export default {
 </template>
 
 <style>
+* {
+  font-family: "Ubuntu", serif;
+  font-weight: bold;
+}
+
 html,
 body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Ubuntu", serif;
   overflow-x: hidden;
   scroll-behavior: smooth;
-}
-
-#app {
-  width: 100%;
-  position: absolute;
 }
 
 .el-main {
@@ -68,16 +67,12 @@ body {
   top: 60px;
   min-height: 100vh;
   margin-bottom: 100px;
-  background-color: #eee;
-}
-
-.el-main::-webkit-scrollbar {
-  display: none;
+  overflow: hidden !important;
 }
 
 :root {
-  --theme-color: #faa66e;
-  --el-color-primary: #faa66e !important;
+  --theme-color: #F4AF43;
+  --el-color-primary: #F4AF43 !important;
 }
 
 ::-webkit-scrollbar {

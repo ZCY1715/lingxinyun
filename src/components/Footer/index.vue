@@ -9,7 +9,7 @@
         <div>
           <span>友情链接</span>
           <span>聆心云心理健康服务平台</span>
-          <span>山东大学</span>
+          <span><a href="https://www.sdu.edu.cn/" target="_blank">山东大学</a></span>
         </div>
       </div>
       <div :class="$style.part2">
@@ -55,11 +55,21 @@
   width: 100%;
   height: 240px !important;
   background-color: rgb(240, 240, 240);
-  font-weight: bold;
+}
+
+.container a {
+  transition: .3s;
+  outline: none;
+  color: #999;
+  text-decoration: none;
+}
+
+.container a:hover {
+  color: var(--theme-color);
 }
 
 .container span {
-  opacity: .4;
+  color: #999;
   font-size: 14px;
 }
 
@@ -85,7 +95,7 @@
 .part1>div:nth-child(2)>span:nth-child(1) {
   font-size: 18px;
   padding: 3px 0 3px 0;
-  opacity: 1;
+  color: #000;
 }
 
 .part1>div:nth-child(1)>span:not(:first-child),

@@ -16,6 +16,4 @@ const Pinia = createPinia()
 Pinia.use(piniaPluginPersist)
 app.use(Pinia)
 
-
 app.mount("#app")
-

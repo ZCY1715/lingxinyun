@@ -10,7 +10,7 @@ export function getScrollTop() {
   return scrollTop
 }
 
-// 设置自动平滑滚动一定高度
+// 设置自动平滑滚动至一定高度
 export function setScrollTop(num) {
   window.scrollTo({ top: num, behavior: 'smooth' })
 }
@@ -26,6 +26,13 @@ export function searchFirstLetter(word, callback) {
       callback(letter.toUpperCase())
     }
   })
+}
+
+export function getSubfix(num) {
+  if (num < 1000) {
+    return num + ''
+  }
+  return (num / 1000).toFixed(1) + '千'
 }
 
 

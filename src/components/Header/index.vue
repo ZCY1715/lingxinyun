@@ -12,6 +12,7 @@ export default {
     return {
       Search: Search,
       searchValue: '',
+      // 导航列表项定义
       menuList: [
         {
           name: "游戏",
@@ -78,6 +79,7 @@ export default {
         v-if="hasSearch" />
     </div>
     <div>
+      <!-- 导航图标模块添加 -->
       <UserBox />
       <MessageBox />
       <LetterBox />
@@ -89,7 +91,7 @@ export default {
 .container {
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 999;
   width: 100vw;
   border-bottom: 2px #eee solid;
   display: flex;
@@ -117,7 +119,6 @@ export default {
 .logo {
   min-width: 80px;
   font-size: 24px;
-  font-weight: 600;
   cursor: default;
 }
 
@@ -128,7 +129,6 @@ export default {
   justify-content: space-evenly;
   width: calc(var(--w) * 80px);
   font-size: 18px;
-  font-weight: bold;
   cursor: pointer;
 }
 

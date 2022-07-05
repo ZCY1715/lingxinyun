@@ -7,7 +7,7 @@ import View from '../../assets/svgs/view.svg?vueComponent'
 import { markRaw } from 'vue'
 import Loading from '../../components/Loading.vue'
 import { ClickOutside } from 'element-plus'
-import { searchFirstLetter } from '../../utils'
+import { searchFirstLetter, getSubfix } from '../../utils'
 import useStore from '../../stores'
 markRaw(Search)
 
@@ -28,6 +28,7 @@ export default {
       sortType: '推荐',
       sortTypes: ['推荐', '精选', '好评最多', '查看次数最多', '讨论次数最多', '最新'],
       searchList: [],
+      getSubfix: getSubfix,
     }
   },
   props: ['q'],
@@ -58,12 +59,7 @@ export default {
     blurOnStyleTypeOption() {
       this.showStyleTypes = false
     },
-    getSubfix(num) {
-      if (num < 1000) {
-        return num + ''
-      }
-      return (num / 1000).toFixed(1) + '千'
-    }
+
   },
   created() {
     this.searchValue = this.q
@@ -93,7 +89,7 @@ export default {
         }
       }
       return target
-    }
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -223,7 +219,6 @@ export default {
 }
 
 .searchTypeItem {
-  font-weight: bold;
   opacity: .7;
   display: flex;
   justify-content: center;
@@ -281,7 +276,6 @@ export default {
   transition: .5s;
   border-radius: 10px;
   cursor: pointer;
-  font-weight: bold;
   color: #666;
   background-color: #fff;
 }
@@ -311,9 +305,8 @@ export default {
   position: absolute;
   top: -8px;
   left: 5px;
-  background: #eee;
+  background: #fff;
   font-size: 14px;
-  font-weight: bold;
   opacity: 0;
   transition: .5s;
   color: var(--theme-color);
@@ -329,7 +322,6 @@ export default {
   flex-direction: row;
   height: 420px;
   justify-content: space-evenly;
-  font-weight: bold;
 }
 
 .styleTypeOption> :nth-child(1),
@@ -392,7 +384,6 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  font-weight: bold;
   opacity: .8;
 }
 
@@ -405,6 +396,10 @@ export default {
   border-radius: 20px;
   transition: .3s;
   background-color: #fff;
+}
+
+.sortTypeContainer:hover {
+  background-color: #eee;
 }
 
 .sortTypeContainer svg {
@@ -424,8 +419,6 @@ export default {
 }
 
 .dropDownMenu {
-  font-family: "Ubuntu", serif;
-  font-weight: bold;
   opacity: .7;
   font-size: 14px;
 }
@@ -467,6 +460,7 @@ export default {
 
 .searchContent>div>img {
   height: 285px;
+  object-fit: cover;
 }
 
 .contentDescription {
@@ -479,7 +473,6 @@ export default {
 .contentDescription>div:nth-child(1) {
   display: flex;
   flex-direction: column;
-  font-weight: bold;
 }
 
 .contentDescription>div:nth-child(1)>span:nth-child(1) {
@@ -504,7 +497,6 @@ export default {
 .contentDescription>div:nth-child(2) {
   display: flex;
   align-items: flex-start;
-  font-weight: bold;
 }
 
 .contentDescription>div:nth-child(2)>span {

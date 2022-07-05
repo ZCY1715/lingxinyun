@@ -4,7 +4,7 @@ import useStore from '../../stores'
 export default {
   data() {
     return {
-      userInfo: null
+      userInfo: {}
     }
   },
   created() {
@@ -17,7 +17,8 @@ export default {
 <template>
   <el-popover placement="bottom-start" :width="300" trigger="hover">
     <template #reference>
-      <div :class="$style.avatar" @click="() => { $router.push({ name: 'UserPage' }) }">
+      <div :class="$style.avatar"
+        @click="() => { $router.push({ name: 'UserPage', params: { uid: userInfo.uid, isOwn: true } }) }">
         <img :src="userInfo.avatarURL" />
       </div>
     </template>
@@ -105,7 +106,6 @@ export default {
   padding: 3px 0 3px 10px;
   transition: .3s;
   border-radius: 3px;
-  font-weight: bold;
   opacity: .9;
 }
 

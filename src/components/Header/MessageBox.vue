@@ -110,7 +110,6 @@ export default {
 .noMessage p {
   margin: 0;
   padding: 3px;
-  font-weight: bold;
   opacity: .9;
 }
 
@@ -153,8 +152,8 @@ export default {
   flex-direction: row;
   align-items: center;
   padding: 10px 0 10px 50px;
+  margin-top: 5px;
   border-bottom: 1px solid #eee;
-  box-shadow: #ddd 1px 1px 1px;
   width: 100%;
   transition: .3s;
 }
@@ -187,12 +186,10 @@ export default {
 
 .mainContent>div:nth-child(1)>div:nth-child(1) {
   font-size: 16px;
-  font-weight: bold;
 }
 
 .mainContent>div:nth-child(2) {
   padding-top: 5px;
-  font-weight: bold;
   opacity: .8;
   text-overflow: ellipsis;
   overflow: hidden;
