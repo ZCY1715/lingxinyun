@@ -17,8 +17,7 @@ export default {
 <template>
   <el-popover placement="bottom-start" :width="300" trigger="hover">
     <template #reference>
-      <div :class="$style.avatar"
-        @click="() => { $router.push({ name: 'UserPage', params: { uid: userInfo.uid, isOwn: true } }) }">
+      <div :class="$style.avatar" @click="() => { $router.push({ name: 'UserPage', params: { uid: userInfo.uid } }) }">
         <img :src="userInfo.avatarURL" />
       </div>
     </template>

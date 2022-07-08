@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
   {
+    path: '/login',
+    name: 'LoginPage',
+    component: () => import("../views/LoginPage/index.vue")
+  },
+  {
     path: "/",
     name: "HomePage",
     component: () => import("../views/HomePage/index.vue")
@@ -67,6 +72,11 @@ const routes = [
         component: () => import("../views/UserPage/NFT.vue")
       }
     ]
+  },
+  {
+    path: '/modifyUserInfo',
+    name: 'ModifyUserInfoPage',
+    component: () => import("../views/UserPage/ModifyUserInfoPage/index.vue")
   },
   {
     path: "/search",

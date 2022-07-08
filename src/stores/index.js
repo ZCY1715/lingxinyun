@@ -4,11 +4,16 @@ const useStore = defineStore("store", {
   state: () => {
     return {
       userInfo: {
+        isFetched: false,
         uid: '123',
         nickname: "清明",
         email: "1685459748@qq.com",
         avatarURL: "https://img.js.design/assets/img/5ff80374c88e97e2a029378b.png",
-        address: '济南',
+        bannerImg: '',
+        address: {
+          province: '山东',
+          city: '济南',
+        },
         views: '2',
         likes: '1',
         followers: '2',
@@ -232,11 +237,18 @@ const useStore = defineStore("store", {
   },
 
   getters: {
-
+    uid() {
+      return this.userInfo.uid
+    },
+    isFetchedUserInfo() {
+      return this.userInfo.isFetched
+    }
   },
 
   actions: {
-
+    setFetchedUserInfo() {
+      this.userInfo.isFetched = true
+    }
   },
 
   persist: {

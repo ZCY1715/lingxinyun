@@ -62,6 +62,16 @@ body {
   scroll-behavior: smooth;
 }
 
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
 .el-main {
   position: relative;
   top: 60px;

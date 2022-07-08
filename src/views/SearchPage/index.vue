@@ -7,7 +7,7 @@ import View from '../../assets/svgs/view.svg?vueComponent'
 import { markRaw } from 'vue'
 import Loading from '../../components/Loading.vue'
 import { ClickOutside } from 'element-plus'
-import { searchFirstLetter, getSubfix } from '../../utils'
+import { searchFirstLetter, unitConverter } from '../../utils'
 import useStore from '../../stores'
 markRaw(Search)
 
@@ -28,7 +28,6 @@ export default {
       sortType: '推荐',
       sortTypes: ['推荐', '精选', '好评最多', '查看次数最多', '讨论次数最多', '最新'],
       searchList: [],
-      getSubfix: getSubfix,
     }
   },
   props: ['q'],
@@ -59,7 +58,7 @@ export default {
     blurOnStyleTypeOption() {
       this.showStyleTypes = false
     },
-
+    unitConverter,
   },
   created() {
     this.searchValue = this.q
@@ -177,13 +176,13 @@ export default {
             <span :class="['svgContainer', $style.contentSvg]">
               <Like />
             </span>
-            {{ getSubfix(content.likes) }}
+            {{ unitConverter(content.likes) }}
           </span>
           <span>
             <span :class="['svgContainer', $style.contentViewSvg]">
               <View />
             </span>
-            {{ getSubfix(content.views) }}
+            {{ unitConverter(content.views) }}
           </span>
         </div>
       </div>
