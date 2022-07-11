@@ -5,6 +5,7 @@ import DefaultAvatar from '../assets/defaultAvatar.png'
 import Address from '../assets/basic/address.svg?vueComponent'
 import Pen from '../assets/basic/pen.svg?vueComponent'
 import Bulb from '../assets/basic/bulb.svg?vueComponent'
+import Jump from '../assets/basic/jump.svg?vueComponent'
 import useStore from '../stores'
 
 
@@ -15,7 +16,7 @@ export default {
     }
   },
   props: ['userInfo'],
-  components: { Address, Pen, Bulb },
+  components: { Address, Pen, Bulb, Jump },
   computed: {
     uid() {
       return this.userInfo.uid
@@ -66,12 +67,33 @@ export default {
         return { name, description }
       }).filter(item => this.userInfo.accountLinks.includes(item.name))
     },
-    customShow() {
+    customContent() {
       return this.userInfo.customContent
     },
     address() {
       const { province, city } = this.userInfo?.address || {}
       return addressMerge(province, city)
+    },
+    about() {
+      return this.userInfo.about
+    },
+    email() {
+      return this.userInfo.email
+    },
+    job() {
+      return this.userInfo.job
+    },
+    company() {
+      return this.userInfo.company
+    },
+    workExperience() {
+      return this.userInfo.workExperience
+    },
+    ownLink() {
+      return this.userInfo.ownLink
+    },
+    ownContent() {
+      return this.userInfo.ownContent || []
     }
   },
   methods: {
@@ -94,14 +116,13 @@ export default {
     // 查看关注列表
     showFollowers() {
 
-    }
+    },
   }
 }
 </script>
 
 <template>
   <div :class="$style.siderBar">
-    <!-- 头像 / 昵称 / 地址 通用 -->
     <div>
       <el-popover placement="right" width="100" trigger="hover" content="前往个人网站" v-if="website">
         <template #reference>
@@ -147,7 +168,7 @@ export default {
         <span>好评</span>
         <span>{{ likes }}</span>
       </div>
-      <div v-if="isOwn" style="cursor: pointer;">
+      <div :class="$style.ownPageHover" v-if="isOwn">
         <span @click="showFans">粉丝</span>
         <span>{{ fans }}</span>
       </div>
@@ -155,7 +176,7 @@ export default {
         <span>粉丝</span>
         <span>{{ fans }}</span>
       </div>
-      <div style="cursor: pointer;" v-if="isOwn">
+      <div :class="$style.ownPageHover" v-if="isOwn">
         <span @click="showFollowers">关注</span>
         <span>{{ followers }}</span>
       </div>
@@ -163,12 +184,64 @@ export default {
     <div v-if="isOwn">
       <div>账户链接</div>
       <div :class="$style.accountLinks">
-        <div v-for="link of accountLinks" :key="link.id">
+        <div v-for="link of accountLinks" :key="link.name">
           <span>
             <Wechat v-if="link.name === 'wechat'" />
+            <Github v-if="link.name === 'github'" />
+            <QQ v-if="link.name === 'QQ'" />
           </span>
           {{ link.description }}
         </div>
+      </div>
+    </div>
+    <div v-if="about">
+      <div>关于我</div>
+      <div :class="$style.about">
+        <p>{{ about }}</p>
+      </div>
+    </div>
+    <div v-if="email">
+      <div>合作邮箱</div>
+      <div>
+        <p>{{ email }}</p>
+      </div>
+    </div>
+    <div v-if="job">
+      <div>现在的工作</div>
+      <div :class="$style.job">
+        <p>{{ job }}</p>
+        <p v-if="company">
+          {{ `—— ${company}` }}
+        </p>
+      </div>
+    </div>
+    <div v-if="workExperience.length !== 0">
+      <div>工作经历</div>
+      <div :class="$style.workExperience">
+        <div v-for="(item, index) of workExperience" :key="index">
+          <div> <span>{{ item.timeStart }}</span> ~ <span>{{ item.timeEnd }}</span></div>
+          <div>于<span>{{ item.company }}</span></div>
+          <div>担任<span>{{ item.job }}</span></div>
+        </div>
+      </div>
+    </div>
+    <div v-if="ownLink.length !== 0">
+      <div>链接</div>
+      <div :class="$style.ownLink">
+        <div v-for="(item, index) of ownLink" :key="index">
+          <a :href="item.href" target="_blank">
+            <span>{{ item.title }}</span>
+            <span>
+              <Jump />
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div v-for="(item, index) of ownContent" :key="index">
+      <div>{{ item.title }}</div>
+      <div>
+        <p>{{ item.content }}</p>
       </div>
     </div>
   </div>
@@ -177,7 +250,6 @@ export default {
 
 <style module>
 .siderBar {
-  width: 300px;
   background-color: #fff;
   border-radius: 15px;
   display: flex;
@@ -307,11 +379,20 @@ export default {
   background-color: #eee;
 }
 
+.ownPageHover {
+  cursor: pointer;
+}
+
+.ownPageHover:hover {
+  background-color: rgba(252, 209, 90, 0.5) !important;
+}
+
 .siderBar>:nth-of-type(n + 4) {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .siderBar>:nth-of-type(n + 4)>:first-child {
@@ -322,15 +403,15 @@ export default {
   color: #777;
 }
 
-.siderBar>:nth-of-type(n + 4)>:nth-child(2) {
-  margin: 10px 0 0 30px;
-  padding-right: 20px;
+.siderBar>:nth-of-type(n + 4) p {
+  margin: 10px 0 0 10px;
+  padding-right: 10px;
   text-indent: calc(2em + 2px);
-  font-size: 14px;
+  font-size: 16px;
+  color: #555;
 }
 
 .accountLinks {
-  width: 76%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -338,13 +419,21 @@ export default {
 }
 
 .accountLinks>div {
-  width: 100%;
+  width: 76%;
   height: 30px;
+  margin-top: 10px;
   border-radius: 20px;
   border: 1px solid #eee;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #555;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.accountLinks>div:hover {
+  background-color: #eee;
 }
 
 .accountLinks span {
@@ -352,5 +441,102 @@ export default {
   height: 20px;
   margin-left: -30px;
   margin-right: 5px;
+}
+
+.accountLinks svg {
+  fill: #555;
+}
+
+.about {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 10px;
+  padding-bottom: 15px;
+  border-radius: 5px;
+  transition: .3s;
+  box-sizing: content-box;
+}
+
+.about:hover {
+  box-shadow: #aaa 0 0 3px inset;
+}
+
+.workExperience {
+  margin-top: 10px;
+  width: 80%;
+  margin-left: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.workExperience>div {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #888;
+  padding: 3px 5px 3px 5px;
+  transition: .3s;
+  border-radius: 5px;
+}
+
+.workExperience>div:hover {
+  background-color: #eee;
+}
+
+.workExperience>div>div {
+  margin: 3px 0 3px 0;
+}
+
+.workExperience>div span {
+  font-size: 16px;
+  color: #666;
+  padding: 0 5px 0 5px;
+}
+
+.ownLink {
+  margin-top: 10px;
+  width: 80%;
+  margin-left: 10%;
+  border: 1px solid #ddd;
+}
+
+.ownLink>div:not(:first-child) {
+  border-top: 1px solid #ddd;
+}
+
+.ownLink>div:hover svg {
+  fill: var(--theme-color);
+}
+
+.ownLink a {
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  color: #666;
+  transition: .3s;
+}
+
+.ownLink>div:hover a {
+  color: var(--theme-color);
+}
+
+.ownLink a>span {
+  margin: 0 20px 0 20px;
+}
+
+.ownLink a>span:nth-child(2) {
+  display: flex;
+  align-items: center;
+}
+
+.ownLink svg {
+  width: 20px;
+  height: 20px;
+  fill: #666;
+  transition: .3s;
 }
 </style>

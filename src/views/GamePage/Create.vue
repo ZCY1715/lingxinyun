@@ -9,7 +9,7 @@ export default {
   },
   computed: {
     URL() {
-      return `https://lingxinyun.cn/sp/webgl/sandplayGameProcess/index.html?appId=sp_platfrom_sdu&userName=${this.store.userInfo.userName}`
+      return `https://lingxinyun.cn/sp/webgl/sandplayGameProcess/index.html?appId=sp_platfrom_sdu&userName=${this.store.userInfo.uid}`
     }
   }
 }

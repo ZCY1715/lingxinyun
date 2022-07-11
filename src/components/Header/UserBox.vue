@@ -4,12 +4,36 @@ import useStore from '../../stores'
 export default {
   data() {
     return {
-      userInfo: {}
+      store: useStore(),
     }
   },
-  created() {
-    const store = useStore()
-    this.userInfo = store.userInfo
+  computed: {
+    uid() {
+      return this.store.uid
+    },
+    avatarURL() {
+      return this.store?.userInfo?.avatarURL
+    },
+    nickname() {
+      return this.store?.userInfo?.nickname || '用户' + this.uid
+    },
+    email() {
+      return this.store?.userInfo?.email
+    }
+  },
+  methods: {
+    // 管理聆心云ID
+    manageAccount() {
+
+    },
+    // 前往设置页
+    toSetupPage() { },
+    // 前往帮助页
+    toHelpPage() { },
+    // 注销登录
+    logOut() {
+
+    }
   }
 }
 </script>
@@ -17,29 +41,29 @@ export default {
 <template>
   <el-popover placement="bottom-start" :width="300" trigger="hover">
     <template #reference>
-      <div :class="$style.avatar" @click="() => { $router.push({ name: 'UserPage', params: { uid: userInfo.uid } }) }">
-        <img :src="userInfo.avatarURL" />
+      <div :class="$style.avatar" @click="() => $router.push({ name: 'UserPage', params: { uid } })">
+        <img :src="avatarURL" />
       </div>
     </template>
     <div :class="$style.popoverContainer">
       <div :class="$style.userInfo">
         <div>
-          <img :src="userInfo.avatarURL">
+          <img :src="avatarURL" @click="() => $router.push({ name: 'UserPage', params: { uid } })">
         </div>
         <div>
-          <span><strong>{{ userInfo.nickname }}</strong></span>
-          <span>{{ userInfo.email }}</span>
-          <span>管理聆心云ID</span>
+          <span><strong>{{ nickname }}</strong></span>
+          <span v-show="email">{{ email }}</span>
+          <span @click="manageAccount">管理聆心云ID</span>
         </div>
       </div>
       <div class="cutLineX"></div>
       <div :class="$style.moreOption">
-        <div>聆心云个人资料</div>
-        <div>设置</div>
-        <div>帮助</div>
+        <div @click="() => $router.push({ name: 'ModifyUserInfoPage' })">聆心云个人资料</div>
+        <div @click="toSetupPage">设置</div>
+        <div @click="toHelpPage">帮助</div>
       </div>
       <div class="cutLineX"></div>
-      <div>注销</div>
+      <div @click="logOut">注销</div>
     </div>
   </el-popover>
 </template>
@@ -81,6 +105,7 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 
@@ -97,6 +122,7 @@ export default {
 .userInfo span:nth-child(3) {
   margin-top: 10px;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .moreOption div,
@@ -106,6 +132,7 @@ export default {
   transition: .3s;
   border-radius: 3px;
   opacity: .9;
+  cursor: pointer;
 }
 
 .moreOption div:hover,

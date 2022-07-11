@@ -263,7 +263,7 @@ export default {
 
 <template>
   <div :class="$style.control">
-    <span @click="() => $router.go(-1)">返回个人资料</span>
+    <span @click="() => $router.go(-1)">返回</span>
     <span @click="saveModify">保存修改</span>
   </div>
   <div :class="$style.container">

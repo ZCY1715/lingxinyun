@@ -17,7 +17,7 @@ export default {
       searchValue: '',
       searchTypes: ['沙盘', '沙具', '人物'],
       searchType: '沙盘',
-      isLoading: true,
+      isLoading: false,
       showActiveStyleType: false,
       showStyleTypes: false,
       styleType: '所有',
@@ -93,10 +93,10 @@ export default {
   },
   mounted() {
     // 使用 api 获取
-    setTimeout(() => {
-      this.isLoading = false
-      this.searchList = this.store.searchList
-    }, 2000)
+    // setTimeout(() => {
+    this.isLoading = false
+    this.searchList = this.store.searchList
+    // }, 2000)
   },
 }
 
@@ -447,11 +447,12 @@ export default {
 
 .searchContent>div {
   height: 350px;
-  background-color: #eee;
+  background-color: rgba(238, 238, 238, 0.5);
   display: flex;
   flex-direction: column;
   transition: .5s;
   box-shadow: #ddd 5px 5px 5px;
+  border-radius: 10px;
 }
 
 .searchContent>div:hover {
@@ -461,6 +462,7 @@ export default {
 .searchContent>div>img {
   height: 285px;
   object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
 .contentDescription {

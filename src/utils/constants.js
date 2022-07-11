@@ -23,3 +23,5 @@ export const accountLinks = [
     onDisconnect: (uid) => { }
   }
 ]
+
+export const domain = 'www.lingxinyun.com'

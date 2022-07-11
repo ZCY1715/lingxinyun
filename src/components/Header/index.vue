@@ -4,6 +4,7 @@ import UserBox from './UserBox.vue'
 import MessageBox from './MessageBox.vue'
 import LetterBox from './LetterBox.vue'
 import { markRaw } from 'vue'
+import useStore from '../../stores'
 
 markRaw(Search)
 
@@ -34,16 +35,25 @@ export default {
           path: "/news",
           select: false,
         }
-      ]
+      ],
+      store: useStore()
     }
   },
   props: ["hasSearch"],
   components: { UserBox, MessageBox, LetterBox },
+  computed: {
+    isLogin() {
+      return this.store.isLogin
+    },
+
+  },
   methods: {
     search() {
       this.$router.push({ name: "SearchPage", query: { q: this.searchValue } })
       this.searchValue = ''
-    }
+    },
+    toRegiste() { },
+    toLogin() { }
   },
   watch: {
     $route(newRouter, oldRouter) {
@@ -80,9 +90,15 @@ export default {
     </div>
     <div>
       <!-- 导航图标模块添加 -->
-      <UserBox />
-      <MessageBox />
-      <LetterBox />
+      <template v-if="isLogin">
+        <UserBox />
+        <MessageBox />
+        <LetterBox />
+      </template>
+      <template v-else>
+        <span @click="toRegiste">注册</span>
+        <span @click="toLogin">登录</span>
+      </template>
     </div>
   </el-header>
 </template>
@@ -112,8 +128,26 @@ export default {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  width: 150px;
-  justify-content: space-between;
+}
+
+.container>div:nth-child(3)>span {
+  margin-right: 30px;
+  padding: 7px 14px 7px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .3s;
+  box-shadow: #eee 3px 3px 5px;
+}
+
+.container>div:nth-child(3)>span:hover {
+  background-color: var(--theme-color);
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.container>div:nth-child(3)>div {
+  margin-right: 20px;
 }
 
 .logo {

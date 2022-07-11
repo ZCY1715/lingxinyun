@@ -74,7 +74,9 @@ export default {
   },
   mounted() {
     const height = this.$refs.siderBarRef.offsetHeight
-    this.$refs.mainRef.style.top = -(height - 30) + 'px'
+    if (height > this.$refs.mainRef.offsetHeight) {
+      this.$refs.mainRef.style.height = height + 'px'
+    }
     const index = this.navs.findIndex(item => this.$route.name === item.pathName)
     this.navs[Math.max(0, index)].active = true
   },
@@ -159,15 +161,17 @@ export default {
 }
 
 .siderBar {
-  position: relative;
-  top: -250px;
+  position: absolute;
+  top: 50px;
+  width: 300px;
 }
 
 .content {
   position: relative;
+  top: 50px;
   left: 350px;
-  min-height: 550px;
   width: calc(100vw - 400px);
+  margin-bottom: 200px;
 }
 
 .content>:first-child {

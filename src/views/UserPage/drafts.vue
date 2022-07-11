@@ -1,6 +1,5 @@
 <script>
 import useStore from "../../stores"
-import Loading from '../../components/Loading.vue'
 import WorkCard from '../../components/WorkCard.vue'
 import CreateWorkCard from '../../components/CreateWorkCard.vue'
 const store = useStore()
@@ -12,7 +11,7 @@ export default {
       isLoading: false,
     }
   },
-  components: { Loading, WorkCard, CreateWorkCard },
+  components: { WorkCard, CreateWorkCard },
   created() {
     this.draftList = store.works.draft
   }

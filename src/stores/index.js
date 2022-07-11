@@ -3,9 +3,10 @@ import { defineStore } from 'pinia'
 const useStore = defineStore("store", {
   state: () => {
     return {
+      token: '',
+      isLogin: true,
       userInfo: {
         nickname: "清明",
-        userName: "hello001",
         uid: '123',
         email: "1685459748@qq.com",
         about: '你好，欢迎交流~',
@@ -38,7 +39,8 @@ const useStore = defineStore("store", {
         fans: 4,
         // 账户链接
         accountLinks: [
-          'wechat'
+          'wechat',
+          'QQ'
         ],
         // 自定义链接
         ownLink: [
@@ -106,7 +108,8 @@ const useStore = defineStore("store", {
             likes: '5',
             views: '8',
             img: 'https://s3-alpha-sig.figma.com/img/a88a/e711/d903916bf284b95a3ec067e54cd21f39?Expires=1658102400&Signature=F-VgIuwXgGo9G3rLiy6-C49KY9pl7uMZFx4qi-~TZPpgxvfQshK3BbUWA0xwjlW7YPrKm6zNQJQ~2WCSeYg~GoOWW-tFmvYPytTUL-xBGktih0CujNV~6wjafK~XkQto31iut6lY8teS3yiA98MdkNF~wo9kmeJvYhdQ1HIpPD5uWPYkeIgpaouw8MuKmKObGtFCkGdW~c57KmiauSGs7KJ~TDMtPrvx~WUFd6w7AqpYRhe1AYys9U5NUl3znmjH2szkDkgdFRFT6bKWxp~ypw7Su45ORcjcQstSzKSuP7i9n24nkd04RSVHSMJEVGA7384B5935gSwkKerIXC-MNQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'
-          }
+          },
+
         ],
         draft: [],
       },
@@ -152,7 +155,7 @@ const useStore = defineStore("store", {
 
   getters: {
     uid() {
-      return this.userInfo.uid
+      return this.userInfo?.uid
     }
   },
 
@@ -161,11 +164,11 @@ const useStore = defineStore("store", {
 
   persist: {
     enabled: true,
+    storage: localStorage,
     strategies: [
       {
-        key: "",
         storage: localStorage, // sessionStorage 
-        // paths: ['userInfo']
+        paths: ['userInfo']
       }
     ]
   }
