@@ -1,14 +1,16 @@
 <script>
-import Setup from '../assets/svgs/setup.svg?vueComponent'
-import ArrowDown from '../assets/svgs/arrowDown.svg?vueComponent'
-import Lock from '../assets/svgs/lock.svg?vueComponent'
-import Like from '../assets/svgs/like.svg?vueComponent'
-import View from '../assets/svgs/view.svg?vueComponent'
 import { unitConverter } from '../utils'
+import Setup from '../assets/basic/setUp.svg?vueComponent'
+import ArrowDown from '../assets/basic/arrowDown.svg?vueComponent'
+import Lock from '../assets/basic/lock.svg?vueComponent'
+import Like from '../assets/basic/like.svg?vueComponent'
+import View from '../assets/basic/view.svg?vueComponent'
+
+
 
 export default {
   props: ['workData'],
-  components: { Setup, ArrowDown, Lock, Like, View },
+  components: { Setup, Lock, Like, View, ArrowDown },
   computed: {
     isPublished() {
       const flag = this.workData.published
@@ -28,10 +30,10 @@ export default {
       <el-popover placement="bottom-start" :width="150" trigger="hover">
         <template #reference>
           <span v-show="isPublished">
-            <span class="svgContainer">
+            <span>
               <Setup />
             </span>
-            <span class="svgContainer">
+            <span>
               <ArrowDown />
             </span>
           </span>
@@ -46,7 +48,7 @@ export default {
     </div>
     <div>
       <span>
-        <span class="svgContainer">
+        <span>
           <Lock />
         </span>私密
       </span>
@@ -57,13 +59,13 @@ export default {
     <div>
       <span v-if="isPublished">
         <span>
-          <span class="svgContainer">
+          <span>
             <Like />
           </span>
           {{ unitConverter(workData.likes) }}
         </span>
         <span>
-          <span class="svgContainer">
+          <span>
             <View />
           </span>
           {{ unitConverter(workData.views) }}

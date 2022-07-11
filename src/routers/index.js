@@ -14,12 +14,17 @@ const routes = [
   {
     path: "/game",
     name: "GamePage",
-    component: () => import("../views/GamePage/index.vue")
+    component: () => import("../views/GamePage/index.vue"),
+  },
+  {
+    path: '/gameCreate',
+    name: 'CreateGame',
+    component: () => import("../views/GamePage/Create.vue")
   },
   {
     path: "/discover",
     name: "DiscoverPage",
-    component: () => import("../views/DiscoverPage/index.vue")
+    component: () => import("../views/DiscoverPage/index.vue"),
   },
   {
     path: "/forum",

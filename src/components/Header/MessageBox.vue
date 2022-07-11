@@ -1,7 +1,6 @@
 <script>
-import Bell from '../../assets/svgs/bell.svg?vueComponent'
-import Upload from '../../assets/svgs/upload.svg?vueComponent'
-import Loading from '../Loading.vue'
+import Bell from '../../assets/basic/bell.svg?vueComponent'
+import Upload from '../../assets/basic/upload.svg?vueComponent'
 import useStore from '../../stores'
 
 export default {
@@ -9,17 +8,17 @@ export default {
     return {
       messages: [],
       isLoading: true,
+      store: useStore()
     }
   },
-  components: { Bell, Loading, Upload },
+  components: { Bell, Upload },
   computed: {
     hasMessage() {
       return this.messages.length !== 0
     }
   },
   created() {
-    const store = useStore()
-    this.messages = store.messages
+    this.messages = this.store.messages
   },
   methods: {
     doWhenShow() {
@@ -36,7 +35,7 @@ export default {
 <template>
   <el-popover placement="bottom-start" :width="400" trigger="click" @show="doWhenShow">
     <template #reference>
-      <div :class="['svgContainer', 'svgContainerHover', $style.bell]" @click="enterMessagePage">
+      <div :class="$style.bell" @click="enterMessagePage">
         <div v-if="hasMessage" :class="$style.showMessage"></div>
         <Bell />
       </div>
@@ -66,7 +65,7 @@ export default {
         <p>您当前没有任何通知。</p>
         <p>我们会在您获得好评、新关注者时通知您。要开始，</p>
         <p>请上传新作品。<span :class="$style.upload">
-            <span :class="['svgContainer', $style.uploadIcon]">
+            <span :class="$style.uploadIcon">
               <Upload />
             </span>添加作品
           </span></p>
@@ -76,11 +75,41 @@ export default {
 </template>
 
 <style module>
+@keyframes Swing {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(30deg);
+  }
+
+  75% {
+    transform: rotate(-30deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 .bell {
   width: 20px;
   height: 20px;
   position: relative;
   cursor: pointer;
+}
+
+.bell svg {
+  transition: .3s;
+}
+
+.bell svg:hover {
+  fill: var(--theme-color);
+}
+
+.bell:hover {
+  animation: Swing .8s;
 }
 
 .showMessage {

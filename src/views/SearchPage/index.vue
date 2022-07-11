@@ -1,16 +1,14 @@
 <script>
-import Search from '../../assets/svgs/search.svg?vueComponent'
-import ArrowDown from '../../assets/svgs/arrowDown.svg?vueComponent'
-import Signal1 from '../../assets/svgs/signal1.svg?vueComponent'
-import Like from '../../assets/svgs/like.svg?vueComponent'
-import View from '../../assets/svgs/view.svg?vueComponent'
+import Search from '../../assets/basic/search.svg?vueComponent'
 import { markRaw } from 'vue'
-import Loading from '../../components/Loading.vue'
 import { ClickOutside } from 'element-plus'
 import { searchFirstLetter, unitConverter } from '../../utils'
 import useStore from '../../stores'
 markRaw(Search)
-
+import Signal from '../../assets/basic/signal.svg?vueComponent'
+import ArrowDown from '../../assets/basic/arrowDown.svg?vueComponent'
+import Like from '../../assets/basic/like.svg?vueComponent'
+import View from '../../assets/basic/view.svg?vueComponent'
 
 export default {
   data() {
@@ -23,15 +21,16 @@ export default {
       showActiveStyleType: false,
       showStyleTypes: false,
       styleType: '所有',
-      styleTypes: ['风景园林', '动物', '校园', '赛博朋克', '人物', '建筑'],
-      ofenUseStyleTypes: ['风景园林', '动物', '校园', '赛博朋克', '人物', '建筑'],
+      styleTypes: [],
+      ofenUseStyleTypes: [],
       sortType: '推荐',
       sortTypes: ['推荐', '精选', '好评最多', '查看次数最多', '讨论次数最多', '最新'],
       searchList: [],
+      store: useStore()
     }
   },
   props: ['q'],
-  components: { Loading, ArrowDown, Signal1, Like, View },
+  components: { Signal, ArrowDown, Like, View },
   directives: { ClickOutside },
   methods: {
     changeSearchType(index) {
@@ -62,6 +61,8 @@ export default {
   },
   created() {
     this.searchValue = this.q
+    this.styleTypes = this.store.searchStyleTypes
+    this.ofenUseStyleTypes = this.store.userInfo.ofenUseSearchStyleTypes
   },
   computed: {
     searchTypeIndex() {
@@ -91,10 +92,10 @@ export default {
     },
   },
   mounted() {
+    // 使用 api 获取
     setTimeout(() => {
       this.isLoading = false
-      const store = useStore()
-      this.searchList = store.searchList
+      this.searchList = this.store.searchList
     }, 2000)
   },
 }
@@ -118,11 +119,11 @@ export default {
         <div :class="[showActiveStyleType ? $style.clickStyleType : '']" @click="focusOnStyleType"
           @blur="blurOnStyleType" tabindex="0" hidefocus="true">
           <span :class="$style.styleTypeDescription">创意风格</span>
-          <span :class="['svgContainer', $style.Signal1Svg]">
-            <Signal1 />
+          <span :class="$style.Signal1Svg">
+            <Signal />
           </span>
           {{ styleType }}
-          <span :class="['svgContainer', $style.styleTypeDropDownSvg]">
+          <span :class="$style.styleTypeDropDownSvg">
             <ArrowDown />
           </span>
         </div>
@@ -148,7 +149,7 @@ export default {
     <el-dropdown @command="selectSortType">
       <div :class="$style.sortTypeContainer">
         {{ sortType }}
-        <span :class="['svgContainer', $style.dropdown]">
+        <span :class="$style.dropdown">
           <ArrowDown />
         </span>
       </div>
@@ -173,13 +174,13 @@ export default {
         </div>
         <div>
           <span>
-            <span :class="['svgContainer', $style.contentSvg]">
+            <span :class="$style.contentSvg">
               <Like />
             </span>
             {{ unitConverter(content.likes) }}
           </span>
           <span>
-            <span :class="['svgContainer', $style.contentViewSvg]">
+            <span :class="$style.contentViewSvg">
               <View />
             </span>
             {{ unitConverter(content.views) }}

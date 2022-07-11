@@ -1,5 +1,4 @@
 <script>
-import Loading from '../../components/Loading.vue'
 import WorkCard from '../../components/WorkCard.vue'
 import useStore from '../../stores'
 
@@ -13,7 +12,7 @@ export default {
     }
   },
   props: ['type'],
-  components: { Loading, WorkCard },
+  components: { WorkCard },
   created() {
     const { type, uid } = this.$route.params
     this.chooseType = type || '沙盘'

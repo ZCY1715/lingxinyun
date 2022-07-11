@@ -1,19 +1,18 @@
 <script>
+import Letter from '../../assets/basic/letter.svg?vueComponent'
 import useStore from "../../stores"
-import Letter from '../../assets/svgs/letter.svg?vueComponent'
-import Loading from "../Loading.vue"
 
 export default {
   data() {
     return {
       letters: [],
       isLoading: true,
+      store: useStore()
     }
   },
-  components: { Letter, Loading },
+  components: { Letter },
   created() {
-    const store = useStore()
-    this.letters = store.letters
+    this.letters = this.store.letters
   },
   computed: {
     LetterNum() {
@@ -38,7 +37,7 @@ export default {
 <template>
   <el-popover placement="bottom-start" :width="400" trigger="click" @show="doWhenShow">
     <template #reference>
-      <div :class="['svgContainer', 'svgContainerHover', $style.letter]" @click="enterLetterPage">
+      <div :class="$style.letter" @click="enterLetterPage">
         <div v-if="hasLetter" :class="$style.showLetter">
           <span>{{ LetterNum > 9 ? "•••" : LetterNum }}</span>
         </div>
@@ -82,11 +81,41 @@ export default {
 </template>
 
 <style module>
+@keyframes Swing {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(30deg);
+  }
+
+  75% {
+    transform: rotate(-30deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 .letter {
   width: 30px;
   height: 30px;
   position: relative;
   cursor: pointer;
+}
+
+.letter svg {
+  transition: .3s;
+}
+
+.letter svg:hover {
+  fill: var(--theme-color);
+}
+
+.letter:hover {
+  animation: Swing .8s;
 }
 
 .showLetter {

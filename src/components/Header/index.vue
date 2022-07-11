@@ -1,5 +1,5 @@
 <script>
-import Search from '../../assets/svgs/search.svg?vueComponent'
+import Search from '../../assets/basic/search.svg?vueComponent'
 import UserBox from './UserBox.vue'
 import MessageBox from './MessageBox.vue'
 import LetterBox from './LetterBox.vue'

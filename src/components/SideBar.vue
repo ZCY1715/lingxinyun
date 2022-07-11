@@ -1,35 +1,99 @@
 <script>
-import Pen from '../assets/svgs/pen.svg?vueComponent'
-import Bulb from '../assets/svgs/bulb.svg?vueComponent'
-import Address from '../assets/svgs/address.svg?vueComponent'
-import Wechat from '../assets/links/wechat.svg?vueComponent'
 import { addressMerge } from '../utils'
+import { accountLinks } from '../utils/constants'
+import DefaultAvatar from '../assets/defaultAvatar.png'
+import Address from '../assets/basic/address.svg?vueComponent'
+import Pen from '../assets/basic/pen.svg?vueComponent'
+import Bulb from '../assets/basic/bulb.svg?vueComponent'
 import useStore from '../stores'
-const store = useStore()
+
 
 export default {
+  data() {
+    return {
+      store: useStore()
+    }
+  },
   props: ['userInfo'],
-  components: { Address, Pen, Bulb, Wechat },
+  components: { Address, Pen, Bulb },
   computed: {
+    uid() {
+      return this.userInfo.uid
+    },
     isOwn() {
-      return this.userInfo.uid === store.userInfo.uid
+      return this.uid === this.store.uid
+    },
+    avatarURL() {
+      return this.userInfo.avatarURL || DefaultAvatar
+    },
+    website() {
+      return this.userInfo.website
+    },
+    nickname() {
+      return this.userInfo.nickname || '用户' + this.uid
+    },
+    // 判断是否关注了
+    isFollowed() {
+      return false
+    },
+    views() {
+      if (typeof this.userInfo.views !== "number") {
+        return '...'
+      }
+      return this.userInfo.views
+    },
+    likes() {
+      if (typeof this.userInfo.likes !== "number") {
+        return '...'
+      }
+      return this.userInfo.likes
+    },
+    followers() {
+      if (typeof this.userInfo.followers !== "number") {
+        return '...'
+      }
+      return this.userInfo.followers
+    },
+    fans() {
+      if (typeof this.userInfo.fans !== "number") {
+        return '...'
+      }
+      return this.userInfo.fans
     },
     accountLinks() {
-      // 账户链接信息
-      return this.userInfo.accountLinks
+      return accountLinks.map(item => {
+        const { name, description } = item
+        return { name, description }
+      }).filter(item => this.userInfo.accountLinks.includes(item.name))
     },
     customShow() {
-      // 自定义展示内容
       return this.userInfo.customContent
     },
     address() {
-      const { province, city } = this.userInfo.address
+      const { province, city } = this.userInfo?.address || {}
       return addressMerge(province, city)
     }
   },
   methods: {
-    toModifyUserInfoPage() {
-      this.$router.push({ name: "ModifyUserInfoPage" })
+    // 关注
+    beFollowed() {
+
+    },
+    // 取关
+    beDisFollowed() {
+
+    },
+    // 去往私聊界面
+    toLetterPage() {
+
+    },
+    // 查看粉丝列表
+    showFans() {
+
+    },
+    // 查看关注列表
+    showFollowers() {
+
     }
   }
 }
@@ -39,10 +103,17 @@ export default {
   <div :class="$style.siderBar">
     <!-- 头像 / 昵称 / 地址 通用 -->
     <div>
-      <img :src="userInfo.avatarURL">
-      <span>{{ userInfo.nickname }}</span>
+      <el-popover placement="right" width="100" trigger="hover" content="前往个人网站" v-if="website">
+        <template #reference>
+          <a :href="website" target="_blank">
+            <img :src="avatarURL" />
+          </a>
+        </template>
+      </el-popover>
+      <img :src="avatarURL" v-else />
+      <span>{{ nickname }}</span>
       <span>
-        <span class="svgContainer">
+        <span>
           <Address />
         </span>
         {{ address }}
@@ -50,51 +121,55 @@ export default {
     </div>
     <!-- 分角色不同功能按键 -->
     <div v-if="isOwn">
-      <div @click="toModifyUserInfoPage">
-        <span class="svgContainer">
+      <div @click="() => $router.push({ name: 'ModifyUserInfoPage' })">
+        <span>
           <Pen />
         </span>
         编辑您的个人资料
       </div>
-      <div>
-        <span class="svgContainer">
+      <div @click="() => $router.push({ name: 'CreateGame' })">
+        <span>
           <Bulb />
         </span>
         构建您的沙盘游戏
       </div>
     </div>
     <div v-else>
-      <div>关注</div>
-      <div>消息</div>
+      <div @click="isFollowed ? beDisFollowed : beFollowed">{{ isFollowed ? "取关" : "关注" }}</div>
+      <div @click="toLetterPage">消息</div>
     </div>
     <div>
       <div>
         <span>作品查看次数</span>
-        <span>{{ userInfo.views }}</span>
+        <span>{{ views }}</span>
       </div>
       <div>
         <span>好评</span>
-        <span>{{ userInfo.likes }}</span>
+        <span>{{ likes }}</span>
       </div>
-      <div>
-        <span>关注</span>
-        <span>{{ userInfo.followers }}</span>
+      <div v-if="isOwn" style="cursor: pointer;">
+        <span @click="showFans">粉丝</span>
+        <span>{{ fans }}</span>
+      </div>
+      <div v-else>
+        <span>粉丝</span>
+        <span>{{ fans }}</span>
+      </div>
+      <div style="cursor: pointer;" v-if="isOwn">
+        <span @click="showFollowers">关注</span>
+        <span>{{ followers }}</span>
       </div>
     </div>
     <div v-if="isOwn">
       <div>账户链接</div>
       <div :class="$style.accountLinks">
         <div v-for="link of accountLinks" :key="link.id">
-          <span class="svgContainer">
+          <span>
             <Wechat v-if="link.name === 'wechat'" />
           </span>
           {{ link.description }}
         </div>
       </div>
-    </div>
-    <div v-for="item of customShow" :key="item.title">
-      <div>{{ item.title }}</div>
-      <div>{{ item.content }}</div>
     </div>
   </div>
 
@@ -126,9 +201,20 @@ export default {
   margin-top: 30px;
 }
 
+.siderBar>:first-child>a>img {
+  width: 95px;
+  height: 95px;
+  border-radius: 100%;
+}
+
 .siderBar>:first-child>:nth-child(2) {
   font-size: 22px;
   margin-top: 10px;
+  text-align: center;
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
 }
 
 .siderBar>:first-child>:nth-child(3) {
@@ -136,7 +222,6 @@ export default {
   align-items: center;
   justify-content: center;
   opacity: .8;
-  /* width: 95px; */
   height: 25px;
   margin-top: 10px;
 }

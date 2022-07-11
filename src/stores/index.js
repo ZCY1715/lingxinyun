@@ -4,39 +4,66 @@ const useStore = defineStore("store", {
   state: () => {
     return {
       userInfo: {
-        isFetched: false,
-        uid: '123',
         nickname: "清明",
+        userName: "hello001",
+        uid: '123',
         email: "1685459748@qq.com",
+        about: '你好，欢迎交流~',
+        job: '风景园林沙盘设计师',
+        company: '聆心云公司',
+        workExperience: [
+          {
+            job: '风景园林沙盘设计师',
+            company: '聆心云公司',
+            timeStart: '2019-09',
+            timeEnd: '2021-07'
+          },
+          {
+            job: '赛博朋克沙盘设计师',
+            company: '聆心云公司',
+            timeStart: '2021-09',
+            timeEnd: '2023-07'
+          }
+        ],
+        website: '',
         avatarURL: "https://img.js.design/assets/img/5ff80374c88e97e2a029378b.png",
         bannerImg: '',
         address: {
           province: '山东',
           city: '济南',
         },
-        views: '2',
-        likes: '1',
-        followers: '2',
-        // 自定义展示内容
-        customContent: [
+        views: 2,
+        likes: 1,
+        followers: 2,
+        fans: 4,
+        // 账户链接
+        accountLinks: [
+          'wechat'
+        ],
+        // 自定义链接
+        ownLink: [
           {
-            title: '关于我',
-            content: '风景园林沙盘设计师'
+            title: '微博',
+            href: 'https://weibo.com'
           },
           {
-            title: '合作邮箱',
-            content: '1685459748@qq.com'
+            title: '豆瓣',
+            href: 'https://douban.com'
           }
         ],
-        // 支持的账户链接
-        accountLinks: [
+        // 自定义展示内容
+        ownContent: [
           {
-            id: "1",
-            name: 'wechat',
-            description: '微信',
-            linked: true,
+            title: '个人说明',
+            content: '非诚勿扰，谢谢'
+          },
+          {
+            title: '合作请联系',
+            content: '蒋老师 - 8208208820'
           }
-        ]
+        ],
+        // 不超过 10 项
+        ofenUseSearchStyleTypes: ['风景园林', '动物', '校园', '赛博朋克', '人物', '建筑']
       },
       works: {
         finished: [
@@ -86,22 +113,7 @@ const useStore = defineStore("store", {
       letters: [
         {
           id: "1",
-          nickname: "陈礼",
-          email: "1715614103@qq.com",
-          avatarURL: "https://img.js.design/assets/img/5fcef81c2e35a164425dd505.png",
-          content: "很喜欢您的作品。",
-          time: "2022年6月24日"
-        },
-        {
-          id: "2",
-          nickname: "陈礼",
-          email: "1715614103@qq.com",
-          avatarURL: "https://img.js.design/assets/img/5fcef81c2e35a164425dd505.png",
-          content: "很喜欢您的作品。",
-          time: "2022年6月24日"
-        },
-        {
-          id: "3",
+          uid: '',
           nickname: "陈礼",
           email: "1715614103@qq.com",
           avatarURL: "https://img.js.design/assets/img/5fcef81c2e35a164425dd505.png",
@@ -112,22 +124,7 @@ const useStore = defineStore("store", {
       messages: [
         {
           id: "1",
-          nickname: "陈礼",
-          email: "1715614103@qq.com",
-          avatarURL: "https://img.js.design/assets/img/5fcef81c2e35a164425dd505.png",
-          content: "点赞并评论了您的作品。",
-          time: "2022年6月24日"
-        },
-        {
-          id: "2",
-          nickname: "陈礼",
-          email: "1715614103@qq.com",
-          avatarURL: "https://img.js.design/assets/img/5fcef81c2e35a164425dd505.png",
-          content: "点赞并评论了您的作品。",
-          time: "2022年6月24日"
-        },
-        {
-          id: "3",
+          uid: '',
           nickname: "陈礼",
           email: "1715614103@qq.com",
           avatarURL: "https://img.js.design/assets/img/5fcef81c2e35a164425dd505.png",
@@ -135,103 +132,20 @@ const useStore = defineStore("store", {
           time: "2022年6月24日"
         }
       ],
+      // 支持的搜索风格类型
+      searchStyleTypes: ['风景园林', '动物', '校园', '赛博朋克', '人物', '建筑'],
+
       searchList: [
         {
           id: '1',
+          uid: '',
+          sandId: '',
           nickname: '清明',
           title: '社会人物沙盘',
           likes: 1500,
           views: 15000,
           img: 'https://img.js.design/assets/img/62b3efb2f7713ca8b45a04e7.png'
-        },
-        {
-          id: '2',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb2e6f274b2627bfc0e.png'
-        },
-        {
-          id: '3',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb1e6f2745f6a7bfbf6.png'
-        },
-        {
-          id: '4',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb1e6f27448b37bfc00.png'
-        },
-        {
-          id: '5',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb2b332475d44cabfea.png'
-        },
-        {
-          id: '6',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb2f59c9fd69e9aedb3.png'
-        },
-        {
-          id: '7',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb2e6f274256e7bfc0a.png'
-        },
-        {
-          id: '8',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb1b332477929cabfdf.png'
-        },
-        {
-          id: '9',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb2f7713c4d815a04e6.png'
-        },
-        {
-          id: '10',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb20703be81ff09dddb.png'
-        },
-        {
-          id: '11',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb2b33247fff4cabfe6.png'
-        },
-        {
-          id: '12',
-          nickname: '清明',
-          title: '社会人物沙盘',
-          likes: 1500,
-          views: 15000,
-          img: 'https://img.js.design/assets/img/62b3efb2f7713c0bd95a04eb.png'
-        },
+        }
       ],
     }
   },
@@ -239,16 +153,10 @@ const useStore = defineStore("store", {
   getters: {
     uid() {
       return this.userInfo.uid
-    },
-    isFetchedUserInfo() {
-      return this.userInfo.isFetched
     }
   },
 
   actions: {
-    setFetchedUserInfo() {
-      this.userInfo.isFetched = true
-    }
   },
 
   persist: {

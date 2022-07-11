@@ -6,9 +6,9 @@ import { setScrollTop } from './utils'
 export default {
   data() {
     return {
-      noHeaderPages: ['/login'],
-      noFooterPages: ['/login'],
-      noSearchPage: ['/search'],
+      noHeaderPages: ['LoginPage', 'CreateGame'],
+      noFooterPages: ['LoginPage', 'CreateGame'],
+      noSearchPage: ['SearchPage'],
       currentRoute: '',
 
     }
@@ -27,7 +27,7 @@ export default {
   },
   watch: {
     $route(to) {
-      this.currentRoute = to.path
+      this.currentRoute = to.name
       setScrollTop(0)
     }
   }
@@ -49,8 +49,8 @@ export default {
 
 <style>
 * {
-  font-family: "Ubuntu", serif;
-  font-weight: bold;
+  font-family: "Ubuntu", serif !important;
+  font-weight: bold !important;
 }
 
 html,
@@ -96,40 +96,14 @@ a:focus {
   background: #aaa;
 }
 
-@keyframes Swing {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(30deg);
-  }
-
-  75% {
-    transform: rotate(-30deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-.svgContainer svg {
+svg {
   width: inherit;
   height: inherit;
   opacity: .7;
 }
 
-.svgContainerHover svg {
-  transition: .3s;
-}
-
-.svgContainerHover svg:hover {
-  fill: var(--theme-color);
-}
-
-.svgContainerHover:hover {
-  animation: Swing .8s;
+textarea {
+  resize: none !important;
 }
 
 .cutLineX {

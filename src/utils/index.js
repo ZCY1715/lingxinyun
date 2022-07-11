@@ -1,3 +1,5 @@
+import addressData from './addressData'
+
 // 获取当前滚动条高度
 export function getScrollTop() {
   let scrollTop = 0
@@ -39,6 +41,9 @@ export function unitConverter(num) {
 // 地址展示整理
 export function addressMerge(province, city) {
   if (province && city) {
+    if (province === city) {
+      return city
+    }
     return [province, city].join(" • ")
   }
   if (province)
@@ -79,4 +84,58 @@ export function imgFileToBase64(file, callback) {
     const base64String = e.target.result
     callback(base64String)
   }
+}
+
+const subfixs = ['市', '省', '壮族自治区', '回族自治区', '维吾尔自治区', '自治区', '特别行政区']
+const secondSubfits = ['土家族苗族自治州', '黎族苗族自治县', '土家族苗族自治县', '苗族土家族自治县', '藏族羌族自治州', '哈尼族彝族自治州', '布依族苗族自治州', '苗族侗族自治州', '壮族苗族自治州', '傣族景颇族自治州', '蒙古族藏族自治州', '朝鲜族自治州', '黎族自治县', '土家族自治县', '藏族自治州', '彝族自治州', '傣族自治州', '白族自治州', '傈僳族自治州', '回族自治州', '蒙古自治州', '柯尔克孜自治州', '哈萨克自治州', '市', '县', '特别行政区', '林区', '新区', '地区', '区', '盟', '省']
+
+// 省份
+export function getAllProvinces() {
+  const provinces = Object.keys(addressData)
+  return provinces.map(item => {
+    for (let subfit of subfixs) {
+      if (item.endsWith(subfit)) {
+        return item.replace(subfit, '')
+      }
+    }
+    return item
+  })
+}
+
+// 城市
+export function getCitys(province) {
+  for (let subfit of subfixs) {
+    let key = province + subfit
+    if (addressData[key] !== undefined) {
+      const target = addressData[key]
+      let result = []
+      if (target['市辖区'] !== undefined) {
+        result = [...result, ...target['市辖区'], ...target['县']]
+      } else {
+        result = [...Object.keys(target)]
+        let index = result.findIndex(item => item === "省直辖县级行政区划")
+        if (~index) {
+          result.splice(index, 1)
+          result = [...result, ...target["省直辖县级行政区划"]]
+        }
+        index = result.findIndex(item => item === "自治区直辖县级行政区划")
+        if (~index) {
+          result.splice(index, 1)
+          result = [...result, ...target["自治区直辖县级行政区划"]]
+        }
+      }
+      return result.map(item => {
+        if (item.length <= 2) {
+          return item
+        }
+        for (let subfit of secondSubfits) {
+          if (item.endsWith(subfit)) {
+            return item.replace(subfit, '')
+          }
+        }
+        return item
+      })
+    }
+  }
+  return []
 }
