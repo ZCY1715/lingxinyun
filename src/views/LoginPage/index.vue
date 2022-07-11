@@ -1,28 +1,9 @@
-<script>
-  export default {
-    data() {
-      return {}
-    },
-    
-    props:[],
-    components: {},
-    computed: {},
-    methods: {},
-    watch: {},
-
-    beforeCreate(){},
-    created(){},
-    beforeMount(){},
-    mounted(){},
-    beforeUpdate(){},
-    updated(){},
-    beforeUnmount(){},
-    unmounted(){},
-  }
-</script>
-
 <template>
- <router-view></router-view>
+<div>
+    <div>
+
+    </div>
+</div>
 </template>
 
 <style module>

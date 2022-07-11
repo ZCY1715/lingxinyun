@@ -4,6 +4,7 @@ const userStore = defineStore("use", {
   state: () => {
     return {
       count: 1,
+      isLogin:true
     }
   },
 

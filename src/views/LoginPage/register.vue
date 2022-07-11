@@ -1,9 +1,13 @@
 <script>
-
+import useStore from '../../stores'
 
 export default {
   data() {
     return {
+      store:{},
+      registerPageOne:true,  /* 默认是账号密码注册 */
+      registerStepOne:true,  
+      
       phoneMessage: [
         {
           id: 0,
@@ -40,16 +44,16 @@ export default {
 
     }
   },
+  
   components: {
 
   },
+  created() {
+  this.store =useStore()
+  },
   methods: {
     goLoginPage() {
-      console.log("跳转")
-      this.$router.push({
-
-        path: '/login/loginPage'
-      })
+     this.store.isLogin=true
     }
   }
 

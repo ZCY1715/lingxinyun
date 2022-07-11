@@ -8,10 +8,12 @@ import { createPinia } from 'pinia'
 import piniaPluginPersist from 'pinia-plugin-persist'
 
 
+
 const app = createApp(App)
 
 app.use(Router)
 app.use(ElementPlus)
+
 
 const Pinia = createPinia()
 Pinia.use(piniaPluginPersist)
