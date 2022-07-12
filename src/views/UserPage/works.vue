@@ -43,7 +43,7 @@ export default {
 <style module>
 .worksContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   grid-gap: 20px 20px;
 }
 

@@ -78,8 +78,8 @@ export default {
 
 <style module>
 .container {
-  width: 450px;
-  height: 350px;
+  width: 400px;
+  height: 300px;
   border-radius: 10px;
   box-shadow: #666 5px 5px 5px;
   overflow: hidden;
@@ -150,6 +150,7 @@ export default {
 .worksControl>span {
   padding: 5px 10px 5px 10px;
   transition: .3s;
+  cursor: pointer;
 }
 
 .worksControl>span:hover {
@@ -158,7 +159,7 @@ export default {
 
 .container>:nth-child(2) {
   top: 20px;
-  right: -120px;
+  right: -100px;
   width: 80px;
   color: #ddd;
   border-radius: 30px;

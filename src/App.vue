@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       noHeaderPages: ['LoginPage', 'CreateGame'],
-      noFooterPages: ['LoginPage', 'CreateGame'],
+      noFooterPages: ['LoginPage', 'CreateGame', 'UserPage', 'ModifyUserInfoPage'],
       noSearchPage: ['SearchPage'],
       currentRoute: '',
 

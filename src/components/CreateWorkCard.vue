@@ -19,8 +19,8 @@ export default {
 
 <style module>
 .container {
-  width: 450px;
-  height: 350px;
+  width: 400px;
+  height: 300px;
   border-radius: 10px;
   border: 1px rgba(244, 175, 67) dashed;
   display: flex;

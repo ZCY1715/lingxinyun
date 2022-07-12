@@ -6,7 +6,6 @@ import Router from './Routers'
 import { createPinia } from 'pinia'
 import piniaPluginPersist from 'pinia-plugin-persist'
 import { ElMessage } from 'element-plus'
-import AutoImportSvgs from './AutoImportSvgs'
 import ImportGlobalComponent from './ImportGlobalComponent'
 
 
@@ -20,7 +19,6 @@ Pinia.use(piniaPluginPersist)
 app.use(Pinia)
 
 ImportGlobalComponent(app)
-AutoImportSvgs(app)
 
 app.config.globalProperties.$message = ElMessage
 

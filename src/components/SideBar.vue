@@ -7,16 +7,23 @@ import Pen from '../assets/basic/pen.svg?vueComponent'
 import Bulb from '../assets/basic/bulb.svg?vueComponent'
 import Jump from '../assets/basic/jump.svg?vueComponent'
 import useStore from '../stores'
+import FollowPanel from './FollowPanel.vue'
+import Wechat from '../assets/links/wechat.svg?vueComponent'
+import QQ from '../assets/links/QQ.svg?vueComponent'
+import Github from '../assets/links/github.svg?vueComponent'
 
 
 export default {
   data() {
     return {
-      store: useStore()
+      store: useStore(),
+      showFollowPanel: false,
+      // 0为关注列表,1为粉丝列表
+      followPanelType: 0,
     }
   },
   props: ['userInfo'],
-  components: { Address, Pen, Bulb, Jump },
+  components: { Address, Pen, Bulb, Jump, Wechat, QQ, Github, FollowPanel },
   computed: {
     uid() {
       return this.userInfo.uid
@@ -109,14 +116,16 @@ export default {
     toLetterPage() {
 
     },
-    // 查看粉丝列表
     showFans() {
-
+      console.log(1)
+      this.showFollowPanel = true
+      this.followPanelType = 1
     },
-    // 查看关注列表
     showFollowers() {
-
-    },
+      console.log(1)
+      this.showFollowPanel = true
+      this.followPanelType = 0
+    }
   }
 }
 </script>
@@ -168,16 +177,16 @@ export default {
         <span>好评</span>
         <span>{{ likes }}</span>
       </div>
-      <div :class="$style.ownPageHover" v-if="isOwn">
-        <span @click="showFans">粉丝</span>
+      <div :class="$style.ownPageHover" v-if="isOwn" @click="showFans">
+        <span>粉丝</span>
         <span>{{ fans }}</span>
       </div>
       <div v-else>
         <span>粉丝</span>
         <span>{{ fans }}</span>
       </div>
-      <div :class="$style.ownPageHover" v-if="isOwn">
-        <span @click="showFollowers">关注</span>
+      <div :class="$style.ownPageHover" v-if="isOwn" @click="showFollowers">
+        <span>关注</span>
         <span>{{ followers }}</span>
       </div>
     </div>
@@ -245,7 +254,7 @@ export default {
       </div>
     </div>
   </div>
-
+  <FollowPanel @closeHandle="() => showFollowPanel = false" v-if="showFollowPanel" :type="followPanelType" />
 </template>
 
 <style module>

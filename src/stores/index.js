@@ -39,8 +39,7 @@ const useStore = defineStore("store", {
         fans: 4,
         // 账户链接
         accountLinks: [
-          'wechat',
-          'QQ'
+          'wechat'
         ],
         // 自定义链接
         ownLink: [
@@ -150,6 +149,7 @@ const useStore = defineStore("store", {
           img: 'https://img.js.design/assets/img/62b3efb2f7713ca8b45a04e7.png'
         }
       ],
+
     }
   },
 

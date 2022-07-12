@@ -6,6 +6,9 @@ import UploadTwo from '../../../assets/basic/uploadTwo.svg?vueComponent'
 import Shrink from '../../../assets/basic/shrink.svg?vueComponent'
 import ArrowDown from '../../../assets/basic/arrowDown.svg?vueComponent'
 import Pen from '../../../assets/basic/pen.svg?vueComponent'
+import Wechat from '../../../assets/links/wechat.svg?vueComponent'
+import QQ from '../../../assets/links/QQ.svg?vueComponent'
+import Github from '../../../assets/links/github.svg?vueComponent'
 
 export default {
   data() {
@@ -57,7 +60,7 @@ export default {
       }
     }
   },
-  components: { UploadTwo, Shrink, ArrowDown, Pen },
+  components: { UploadTwo, Shrink, ArrowDown, Pen, Wechat, QQ, Github },
   methods: {
     switchScrollView(id, index) {
       this.selectMenuIndex = index
@@ -120,7 +123,7 @@ export default {
     addLink() {
       const { title, href } = this.newLink
       if (!title || !href) {
-        this.$message({
+        return this.$message({
           message: '请完善信息',
           grouping: true,
           type: 'warning'
@@ -132,7 +135,7 @@ export default {
     addContent() {
       const { title, content } = this.newContent
       if (!title || !content) {
-        this.$message({
+        return this.$message({
           message: '请完善信息',
           grouping: true,
           type: 'warning'
@@ -165,16 +168,22 @@ export default {
     allCitys() {
       return getCitys(this.province)
     },
+    showBthOfAccountLinks() {
+      return !this.isMoreAccountLinks && this.showAccountLinks.length !== accountLinks.length
+    },
     showAccountLinks() {
-      if (this.isMoreAccountLinks) return accountLinks
-      const result = accountLinks.filter(item => this.isLinked(item))
-      accountLinks.filter(item => item.isShowFirst).forEach(item => {
-        let index = result.findIndex(i => i.name === item.name)
-        if (!~index) {
-          result.push(item)
-        }
-      })
-      return result
+      if (!this.isMoreAccountLinks) {
+        return [
+          ...accountLinks.filter(item => this.isLinked(item)),
+          ...accountLinks.filter(item => !this.isLinked(item) && item.isShowFirst)
+        ]
+      } else {
+        return [
+          ...accountLinks.filter(item => this.isLinked(item)),
+          ...accountLinks.filter(item => !this.isLinked(item) && item.isShowFirst),
+          ...accountLinks.filter(item => !this.isLinked(item) && !item.isShowFirst)
+        ]
+      }
     },
     workExperience() {
       return this.userInfo.workExperience
@@ -276,7 +285,7 @@ export default {
       <div :class="$style.banner">
         <img :src="bannerImg" v-if="bannerImg" />
         <span>添加横幅图像</span>
-        <span>最佳尺寸 3200*400px</span>
+        <span>最佳尺寸 1920*400px</span>
       </div>
       <div :class="$style.uploadBanner">
         <span ref="uploadBanner">
@@ -357,7 +366,8 @@ export default {
                 <span v-else @click="item.onConnect">连接</span>
               </div>
             </div>
-            <span v-if="!isMoreAccountLinks" @click="() => isMoreAccountLinks = true" :class="$style.moreAccountLinks">
+            <span v-if="showBthOfAccountLinks" @click="() => isMoreAccountLinks = true"
+              :class="$style.moreAccountLinks">
               查看更多
               <span>
                 <ArrowDown />
@@ -802,7 +812,7 @@ export default {
 }
 
 .moreAccountLinks {
-  width: 120px;
+  width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -862,7 +872,7 @@ export default {
 }
 
 .job>span {
-  width: 150px;
+  width: 200px;
   display: flex;
   align-items: center;
   font-size: 18px;
@@ -959,7 +969,7 @@ export default {
 }
 
 .ownLink>span {
-  width: 100px;
+  width: 200px;
   display: flex;
   align-items: center;
   font-size: 18px;
