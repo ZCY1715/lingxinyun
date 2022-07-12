@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       noHeaderPages: ['LoginPage', 'CreateGame'],
-      noFooterPages: ['LoginPage', 'CreateGame', 'UserPage', 'ModifyUserInfoPage'],
+      noFooterPages: ['LoginPage', 'CreateGame', 'UserPage', 'ModifyUserInfoPage', 'ChatPage'],
       noSearchPage: ['SearchPage'],
       currentRoute: '',
 
@@ -76,8 +76,8 @@ a:focus {
   position: relative;
   top: 60px;
   min-height: 100vh;
-  margin-bottom: 100px;
   overflow: hidden !important;
+  margin-bottom: 100px;
 }
 
 :root {

@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       letters: [],
-      isLoading: true,
+      isLoading: false,
       store: useStore()
     }
   },
@@ -24,10 +24,8 @@ export default {
   },
   methods: {
     doWhenShow() {
-      if (!this.isLoading) return
-      setTimeout(() => {
-        this.isLoading = false
-      }, 1000)
+      // 当面板展示时请求数据
+
     }
   }
 }
@@ -49,9 +47,9 @@ export default {
       <div class="cutLineX"></div>
       <div>
         <div :class="$style.controler">
-          <div>编写 → </div>
+          <div @click="() => $router.push({ name: 'ChatPage', params: { isWrite: true } })">编写 → </div>
           <div class="cutLineY"></div>
-          <div>全部 → </div>
+          <div @click="() => $router.push({ name: 'ChatPage' })">全部 → </div>
         </div>
         <div class="cutLineX"></div>
         <div v-if="isLoading">

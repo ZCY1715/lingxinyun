@@ -88,6 +88,11 @@ const routes = [
     name: "SearchPage",
     props: route => ({ q: route.query.q }),
     component: () => import('../views/SearchPage/index.vue')
+  },
+  {
+    path: '/chat',
+    name: 'ChatPage',
+    component: () => import('../views/ChatPage/index.vue')
   }
 ]
 
