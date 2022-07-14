@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       noHeaderPages: ['LoginPage', 'CreateGame'],
-      noFooterPages: ['LoginPage', 'CreateGame', 'UserPage', 'ModifyUserInfoPage', 'ChatPage'],
+      noFooterPages: ['LoginPage', 'CreateGame', 'UserPage', 'ModifyUserInfoPage', 'ChatPage', 'DetailPage'],
       noSearchPage: ['SearchPage'],
       currentRoute: '',
 
@@ -26,6 +26,7 @@ export default {
     }
   },
   watch: {
+    // 路由跳转后滑至顶部
     $route(to) {
       this.currentRoute = to.name
       setScrollTop(0)
@@ -60,6 +61,7 @@ body {
   padding: 0;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  position: relative;
 }
 
 a,
@@ -83,6 +85,7 @@ a:focus {
 :root {
   --theme-color: #F4AF43;
   --el-color-primary: #F4AF43 !important;
+  --a: red;
 }
 
 ::-webkit-scrollbar {
@@ -104,6 +107,10 @@ svg {
 
 textarea {
   resize: none !important;
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
 }
 
 .cutLineX {

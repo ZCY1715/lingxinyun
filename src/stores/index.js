@@ -74,6 +74,7 @@ const useStore = defineStore("store", {
             published: true,
             likes: '1',
             views: '2',
+            tags: [],
             img: 'https://s3-alpha-sig.figma.com/img/42f0/e669/a7c397e92d3b0ac037c6a27f2cb387e6?Expires=1658102400&Signature=UNl881uNG4-3djbyzMB-daNJV5u5hvSx05igDo0a-vF~Qo7jfzpJDx9eBaIGtzhDAHBZgE7McasMN2qD65oqBKmlaX83Mm51xwMaS06bEp05oGTut5yV4~i6XGn~5~a1Khic6t9jZaB9yx9frMONn8mgLWpT7IjtOL~0lHznHPGTv-2qdYkvqeLo7SRf-oWsx~aOU4XrfNyeYkvPYEX4GwNKE0f3vDvu~3Sk~QaxW9QfbPNzSziGGAE8hGsPSpQZydmlI0u570zCXImKHCmeqYPYqmVGj9ZwdDzV2ooAhMHfPfp4QngRFc~CRhluzFwUbPp1nhpW08akHGfGgdwIIQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'
           },
           {

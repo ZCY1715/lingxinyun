@@ -24,6 +24,7 @@ export default {
     const writeTo = this.$route.params.writeTo
     if (writeTo) {
       this.writeTo = writeTo
+      this.selectFromFollow = false
     }
   },
   methods: {

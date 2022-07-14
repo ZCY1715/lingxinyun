@@ -29,10 +29,18 @@ export default {
     }
   },
   mounted() {
+    this.$nextTick(() => {
+      document.body.appendChild(this.$el)
+    })
     this.getDateList()
     setTimeout(() => {
       this.isLoading = false
     }, 1000)
+  },
+  watch: {
+    $route() {
+      document.body.removeChild(this.$el)
+    }
   }
 }
 </script>

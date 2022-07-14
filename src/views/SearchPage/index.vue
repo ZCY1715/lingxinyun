@@ -2,13 +2,12 @@
 import Search from '../../assets/basic/search.svg?vueComponent'
 import { markRaw } from 'vue'
 import { ClickOutside } from 'element-plus'
-import { searchFirstLetter, unitConverter } from '../../utils'
+import { searchFirstLetter } from '../../utils'
 import useStore from '../../stores'
 markRaw(Search)
 import Signal from '../../assets/basic/signal.svg?vueComponent'
 import ArrowDown from '../../assets/basic/arrowDown.svg?vueComponent'
-import Like from '../../assets/basic/like.svg?vueComponent'
-import View from '../../assets/basic/view.svg?vueComponent'
+import SearchCard from '../../components/SearchCard.vue'
 
 export default {
   data() {
@@ -30,7 +29,7 @@ export default {
     }
   },
   props: ['q'],
-  components: { Signal, ArrowDown, Like, View },
+  components: { Signal, ArrowDown, SearchCard },
   directives: { ClickOutside },
   methods: {
     changeSearchType(index) {
@@ -57,7 +56,6 @@ export default {
     blurOnStyleTypeOption() {
       this.showStyleTypes = false
     },
-    unitConverter,
   },
   created() {
     this.searchValue = this.q
@@ -165,29 +163,7 @@ export default {
   </div>
   <div class="cutLineX"></div>
   <div :class="$style.searchContent">
-    <div v-for="content of searchList" :key="content.id">
-      <img :src="content.img">
-      <div :class="$style.contentDescription">
-        <div>
-          <span>{{ content.title }}</span>
-          <span>{{ content.nickname }}</span>
-        </div>
-        <div>
-          <span>
-            <span :class="$style.contentSvg">
-              <Like />
-            </span>
-            {{ unitConverter(content.likes) }}
-          </span>
-          <span>
-            <span :class="$style.contentViewSvg">
-              <View />
-            </span>
-            {{ unitConverter(content.views) }}
-          </span>
-        </div>
-      </div>
-    </div>
+    <SearchCard v-for="content of searchList" :data="content" :key="content.id" />
   </div>
   <div v-if="isLoading" style="margin-top: 200px">
     <Loading />
@@ -441,71 +417,7 @@ export default {
   width: 100%;
   margin-top: 40px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   grid-gap: 40px 20px;
-}
-
-.searchContent>div {
-  height: 350px;
-  background-color: rgba(238, 238, 238, 0.5);
-  display: flex;
-  flex-direction: column;
-  transition: .5s;
-  box-shadow: #ddd 5px 5px 5px;
-  border-radius: 10px;
-}
-
-.searchContent>div:hover {
-  transform: translateY(-15px);
-}
-
-.searchContent>div>img {
-  height: 285px;
-  object-fit: cover;
-  border-radius: 10px 10px 0 0;
-}
-
-.contentDescription {
-  flex-grow: 1;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 5px 10px 5px;
-}
-
-.contentDescription>div:nth-child(1) {
-  display: flex;
-  flex-direction: column;
-}
-
-.contentDescription>div:nth-child(1)>span:nth-child(1) {
-  font-size: 18px;
-}
-
-.contentDescription>div:nth-child(1)>span:nth-child(2) {
-  font-size: 14px;
-  padding-top: 5px;
-}
-
-.contentSvg {
-  width: 16px;
-  height: 16px;
-}
-
-.contentViewSvg {
-  width: 22px;
-  height: 22px;
-}
-
-.contentDescription>div:nth-child(2) {
-  display: flex;
-  align-items: flex-start;
-}
-
-.contentDescription>div:nth-child(2)>span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-right: 10px;
-  opacity: .8;
 }
 </style>
