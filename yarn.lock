@@ -725,6 +725,11 @@ mlly@^0.5.2, mlly@^0.5.3:
     pathe "^0.2.0"
     pkg-types "^0.3.2"
 
+mock@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/mock/-/mock-0.1.1.tgz#e7e3589c7e6b3376d69f5a3e470b56604417c633"
+  integrity sha512-eJcWbgoaFUcPqU0g6AcuPKxoe83f7IPALr+dTwCwBN4Iuj4UlLzPtzUlsIpbLVzaXU0CkxP8PvLWKKlFDYdyCw==
+
 ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"

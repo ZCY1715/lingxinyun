@@ -35,8 +35,12 @@ body {
   padding: 0;
   font-family: "Ubuntu", serif;
   overflow-x: hidden;
-  overflow-y:hidden;
+  overflow-y: scroll;
   scroll-behavior: smooth;
+}
+
+:root {
+  --el-color-primary: rgb(238, 184, 48) !important;
 }
 
 .el-aside {

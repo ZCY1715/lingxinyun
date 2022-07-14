@@ -1,5 +1,6 @@
 <script>
 import { getCodeImg, login, register } from "../api/login/index.js";
+
 export default {
     data() {
         return {
@@ -10,7 +11,7 @@ export default {
             registerControll: false,
 
             loginIndex: 1,
-            registerIndex: 1,
+            registerIndex: 3,
             /*  默认的tab */
             activeName: 'tabTwo',
             codeIntervalTime: 60,
@@ -45,8 +46,50 @@ export default {
                 code: ''
             },
 
+
+
+            formOneRules: {
+                phoneRule: {
+                    validator: (rule, value, callback) => {
+                        value = this.formOne.username
+                        if (value == '') { callback(new Error('手机号不能为空')) }
+
+                        callback()
+                    },
+                    trigger: "blur"
+
+                },
+                usernameRule: {
+                    validator: (rule, value, callback) => {
+                        value = this.formOne.username
+                        if (value == '') { callback(new Error('用户名/账号/手机号不能为空')) }
+
+                        callback()
+                    },
+                    trigger: "blur"
+                },
+                passRule: {
+                    validator: (rule, value, callback) => {
+                        value = this.formOne.password
+                        if (value == '') { callback(new Error('密码不能为空')) }
+                        callback()
+                    },
+                    trigger: "blur"
+                },
+                codeRule: {
+                    validator: (rule, value, callback) => {
+                        value = this.formOne.code
+                        if (value == '') { callback(new Error('验证码不能为空')) }
+                        callback()
+                    },
+                    trigger: "blur"
+
+                }
+
+            },
+
             /* 输入框的检测规则2 */
-            rules: {
+            formTwoRules: {
                 passRule: {
                     validator: (rule, value, callback) => {
                         value = this.formTwo.password
@@ -70,7 +113,7 @@ export default {
                     },
                     trigger: "blur"
                 },
-                accRule: { required: true, message: '账号不能为空', trigger: 'blur' },
+
                 usernameRule: {
                     validator: (rule, value, callback) => {
                         value = this.formTwo.username
@@ -101,10 +144,25 @@ export default {
             ]
         }
     },
-    props: [],
-    components: {},
-    computed: {},
+
     methods: {
+        formVerify(index) {
+            if (index == 1) {
+                if (this.formOne.username == '' || this.formOne.password == '' || this.formOne.code == '') {
+                    return false
+
+                }
+            } else {
+                if (this.formTwo.username == '' || this.formTwo.password == '' || this.formTwo.code == '' || this.formTwo.correctPassword == '') {
+                    return false
+
+                }
+
+            }
+            return true
+
+        },
+
         goLogin() {
             this.loginControll = true
             this.registerControll = false
@@ -121,26 +179,38 @@ export default {
             this.registerIndex = index;
         },
         handleClick() {
-            this.resetForm()
+            this.resetForm(this.formOne)
             this.getCode()
         },
-        resetForm() {
-            this.formOne.username = ''
-            this.formOne.password = ''
-            this.formOne.code = ''
-            this.formOne.uuid = ''
+        resetForm(form) {
+            form.username = ''
+            form.password = ''
+            form.code = ''
+            form.uuid = ''
+            if (form.correctPassword) {
+                form.correctPassword = ''
+            }
         },
         getCode() {
             getCodeImg().then((res) => {
                 console.log(res)
                 this.codeImageUrl = "data:image/gif;base64," + res.data.img;
                 this.formOne.uuid = res.data.uuid;
+                this.formTwo.uuid = res.data.uuid;
                 console.log(this.formOne.uuid)
             }).catch(() => {
                 console.log("请求失败")
             });
         },
         handleLogin() {
+            if (this.formVerify(1) == false) {
+                this.$message({
+                    message: '表单有内容未填，请仔细检查',
+                    type: 'error'
+                })
+                return
+
+            }
             let username = this.formOne.username
             let password = this.formOne.password
             let code = this.formOne.code
@@ -152,12 +222,12 @@ export default {
                     this.$message({
                         message: '注册成功',
                         type: 'success'
-                    });
+                    })
                 } else {
                     this.$message({
                         message: res.data.msg,
                         type: 'error'
-                    });
+                    })
                     this.getCode()
                 }
             }).catch((err) => {
@@ -165,13 +235,35 @@ export default {
             });
         },
         handleRegister() {
-            let username = this.formOne.username
-            let password = this.formOne.password
-            let confirmPassword = password
-            let code = this.formOne.code
-            let uuid = this.formOne.uuid
+            if (!this.formVerify(2)) {
+                this.$message({
+                    message: '表单有内容未填，请仔细检查',
+                    type: 'error'
+                })
+                return
+
+            }
+            let username = this.formTwo.username
+            let password = this.formTwo.password
+            let confirmPassword = this.formTwo.correctPassword
+            let code = this.formTwo.code
+            let uuid = this.formTwo.uuid
             register({ username, password, confirmPassword, code, uuid }).then((res) => {
                 console.log(res)
+                if (res.data.code != 200) {
+                    this.$message({
+                        message: res.data.msg,
+                        type: 'error'
+                    })
+                    return
+
+                } else {
+                    this.$message({
+                        message: res.data.msg,
+                        type: 'success'
+                    })
+                    return
+                }
 
 
             }).catch((err) => {
@@ -221,12 +313,12 @@ export default {
                 <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
                     <el-tab-pane label="手机登录" name="tabOne" :class="$style.tabOne">
                         <!-- tab1 -->
-                        <el-form :model="formOne" label-width="0" :rules="rules" ref="ruleForm">
+                        <el-form :model="formOne" label-width="0" :rules="formOneRules">
                             <!-- 两个输入框 -->
-                            <el-form-item prop="pass">
+                            <el-form-item prop="phoneRule">
                                 <el-input v-model="formOne.username" :class="$style.commonInput" placeholder="请输入手机号" />
                             </el-form-item>
-                            <el-form-item>
+                            <el-form-item prop="codeRule">
                                 <div>
                                     <el-input v-model="formOne.messageCode" :class="$style.commonInput"
                                         placeholder="请输入短信验证码" />
@@ -253,26 +345,26 @@ export default {
                     </el-tab-pane>
                     <el-tab-pane label="密码登录" name="tabTwo" :class="$style.tabTwo">
                         <!-- tab2 -->
-                        <el-form :model="formOne" label-width="0">
+                        <el-form :model="formOne" label-width="0" :rules="formOneRules">
                             <!-- 两个输入框 -->
-                            <el-form-item>
+                            <el-form-item prop="usernameRule">
                                 <el-input v-model="formOne.username" :class="$style.commonInput"
                                     placeholder="请输入手机号/账号/用户名" />
                             </el-form-item>
 
-                            <el-form-item>
+                            <el-form-item prop="passRule">
                                 <el-input v-model="formOne.password" :class="$style.commonInput" placeholder="请输入密码"
                                     :show-password="true" />
                             </el-form-item>
 
-                            <el-form-item :class="$style.codeBox">
-                                <div>
-                                    <el-input v-model="formOne.code" :class="$style.commonInput" placeholder="请输入验证码" />
-                                </div>
-                                <div>
-                                    <el-image :src="codeImageUrl" fit="fill" />
-                                    <div @click="getCode">看不清楚?换一张</div>
-                                </div>
+                            <el-form-item >
+                                <div :class="$style.codeBox">
+                                    <el-input v-model="formOne.code" placeholder="请输入验证码" />
+                                    <div>
+                                        <el-image :src="codeImageUrl" :class="$style.codeContainer" />
+                                        <div @click="getCode">看不清楚?换一张</div>
+                                    </div>
+                        </div>
                             </el-form-item>
                             <!--  登录按钮 -->
                             <el-form-item>
@@ -290,7 +382,7 @@ export default {
                             </div>
                         </el-form>
                     </el-tab-pane>
-                    <el-tab-pane label="扫码登录" name="tabThree">Role</el-tab-pane>
+                    <el-tab-pane label="扫码登录" name="tabThree">暂不支持</el-tab-pane>
                 </el-tabs>
             </div>
         </div>
@@ -311,7 +403,7 @@ export default {
             </div>
 
             <div v-if="registerIndex === 1" :class="$style.registerOne">
-                <el-form :rules="rules" ref="ruleForm" label-width="0">
+                <el-form label-width="0">
                     <el-form-item prop="phoneRule">
                         <el-input v-model="formTwo.username" placeholder="请输入手机号" :class="$style.commonInput">
                             <template #prepend>
@@ -370,7 +462,7 @@ export default {
             </div>
             <!-- 注册组件3 -->
             <div v-if="registerIndex === 3" :class="$style.registerThree">
-                <el-form :rules="rules" v-model="formTwo" ref="formTwo" status-icon>
+                <el-form :rules="formTwoRules" v-model="formTwo" ref="formTwo" status-icon>
                     <el-form-item prop="usernameRule">
                         <el-input v-model="formTwo.username" :class="$style.commonInput" placeholder="用户昵称" />
                     </el-form-item>
@@ -389,13 +481,13 @@ export default {
                         <el-input v-model="formTwo.invitedCode" :class="$style.commonInput" placeholder="邀请码(选填)" />
                     </el-form-item>
 
-                    <el-form-item :class="$style.codeBox">
-                        <div>
-                            <el-input v-model="formTwo.code" :class="$style.commonInput" placeholder="请输入验证码" />
-                        </div>
-                        <div style="margin-left:20px">
-                            <el-image :src="codeImageUrl" fit="fill" />
-                            <div @click="getCode">看不清楚?换一张</div>
+                    <el-form-item >
+                        <div :class="$style.codeBox">
+                            <el-input v-model="formTwo.code" placeholder="请输入验证码" />
+                            <div>
+                                <el-image :src="codeImageUrl" :class="$style.codeContainer" />
+                                <div @click="getCode">看不清楚?换一张</div>
+                            </div>
                         </div>
                     </el-form-item>
 
@@ -417,7 +509,7 @@ export default {
 <style module>
 /* 统一调整输入框样式 */
 .commonInput {
-    height: 40px;
+    height: 50px;
     margin-top: 10px;
 
 }
@@ -425,11 +517,13 @@ export default {
 .commonButton {
     width: 100%;
     margin-top: 10px;
+    transition: 1s;
 }
 
 .commonSubmit {
     width: 100%;
     margin: 0;
+    transition: 1s;
 }
 
 
@@ -456,7 +550,7 @@ export default {
     top: 15%;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 20px;
+    padding: 40px;
 
 }
 
@@ -476,26 +570,40 @@ export default {
 
 /* tab2选中请求验证码按钮的父亲盒子 */
 .codeBox {
-    display: flex;
+display: flex;
+align-items: center;
+margin: 20px 0 20px 0;
 }
 
-.codeBox>:first-child>:nth-child(2) {
-    text-align: center;
-    position: relative;
-    top: 20px;
+.codeBox>div {
+flex:1;
+height: 40px;
 }
 
-.codeBox>:first-child>:nth-child(2)>:nth-child(1) {
-    width: 150px;
-    height: 75px;
-
+.codeBox>div:nth-child(1) {
+    margin-right: 20px;
+}
+.codeBox>div:nth-child(2)>div {
+    width: 100%;
+    height: 100%;
 }
 
-.codeBox>:first-child>:nth-child(2)>:nth-child(2) {
-    color: rgba(42, 130, 228, 1);
+.codeBox>div:nth-child(2) img {
+    width: 110%;
+    height: 110%;
+    margin-left:-4px;
+    object-fit: cover;
+}
+
+.codeBox>:nth-child(2)>:nth-child(2) {
     cursor: pointer;
+    transition: .3s;
+    margin-top: -10px;
 }
 
+.codeBox>div:nth-child(2)>:nth-child(2):hover {
+    color: rgb(93, 158, 243);
+}
 
 /* tab1的样式 */
 
@@ -572,7 +680,7 @@ export default {
     z-index: 99;
     width: 400px;
     height: 530px;
-    background-color: aliceblue;
+    background-color: rgba(255, 255, 255, 1);
     left: 50%;
     top: 15%;
     border-radius: 10px;
@@ -630,5 +738,14 @@ export default {
 /* 忘记密码界面样式 */
 
 .passwordBox {}
+
+
 </style>
 
+<style>
+
+.el-form-item__error{
+    font-family: 'iconfont';
+    font-weight: 500;
+}
+</style>
