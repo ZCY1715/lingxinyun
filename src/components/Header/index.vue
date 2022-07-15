@@ -5,6 +5,7 @@ import MessageBox from './MessageBox.vue'
 import LetterBox from './LetterBox.vue'
 import { markRaw } from 'vue'
 import useStore from '../../stores'
+import LoginCard from '../LoginCard.vue'
 
 markRaw(Search)
 
@@ -36,11 +37,12 @@ export default {
           select: false,
         }
       ],
-      store: useStore()
+      store: useStore(),
+      showLogin: false,
     }
   },
   props: ["hasSearch"],
-  components: { UserBox, MessageBox, LetterBox },
+  components: { UserBox, MessageBox, LetterBox, LoginCard },
   computed: {
     isLogin() {
       return this.store.isLogin
@@ -53,7 +55,9 @@ export default {
       this.searchValue = ''
     },
     toRegiste() { },
-    toLogin() { }
+    toLogin() {
+      this.showLogin = true
+    }
   },
   watch: {
     $route(newRouter, oldRouter) {
@@ -72,6 +76,7 @@ export default {
 </script>
 
 <template>
+  <LoginCard v-if="showLogin" @closeHandle="() => showLogin = false" />
   <el-header :class="$style.container">
     <div>
       <span :class="$style.logo" @click="() => { $router.push({ name: 'HomePage' }) }">

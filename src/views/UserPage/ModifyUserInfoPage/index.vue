@@ -148,7 +148,13 @@ export default {
       this.userInfo.ownLink = this.userInfo.ownLink.filter(item => item.title && item.href)
       this.userInfo.ownContent = this.userInfo.ownContent.filter(item => item.title && item.content)
 
-      // this.userInfo 的保存逻辑
+      // 上传逻辑
+      this.store.userInfo = clone(this.userInfo)
+      this.$message({
+        message: '修改成功',
+        type: 'success'
+      })
+      this.$router.go(-1)
 
     }
   },

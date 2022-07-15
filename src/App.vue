@@ -6,8 +6,8 @@ import { setScrollTop } from './utils'
 export default {
   data() {
     return {
-      noHeaderPages: ['LoginPage', 'CreateGame'],
-      noFooterPages: ['LoginPage', 'CreateGame', 'UserPage', 'ModifyUserInfoPage', 'ChatPage', 'DetailPage'],
+      noHeaderPages: ['LoginPage', 'CreateGame', 'ReviewGame'],
+      noFooterPages: ['LoginPage', 'CreateGame', 'UserPage', 'ModifyUserInfoPage', 'ChatPage', 'DetailPage', 'ReviewGame'],
       noSearchPage: ['SearchPage'],
       currentRoute: '',
 

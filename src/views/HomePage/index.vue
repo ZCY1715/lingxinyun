@@ -5,17 +5,23 @@ import LeftBottomPic from '../../assets/imgs/LeftBottomPic.png'
 import RightTopPic from '../../assets/imgs/RightTopPic.png'
 import RightBottomPic from '../../assets/imgs/RightBottomPic.png'
 import { domain } from '../../utils/constants'
+import useStore from '../../stores'
 
 export default {
   data() {
     return {
       pics: { CenterPic, LeftTopPic, LeftBottomPic, RightTopPic, RightBottomPic },
       domain,
+      store: useStore()
     }
   },
   methods: {
     startToGame() {
-
+      if (this.store.isLogin) {
+        this.$router.push({ name: 'CreateGame' })
+      } else {
+        // 登录 or 注册
+      }
     }
   }
 }

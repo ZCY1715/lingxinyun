@@ -22,7 +22,7 @@ export default {
 
 <template>
   <div :class="$style.container" @click="() => showDetail = true">
-    <DetailPanel v-if="showDetail" @closeHandle="() => showDetail = false" :sand_id="data.sandId" :user_id="data.uid" />
+    <DetailPanel v-if="showDetail" @closeHandle="() => showDetail = false" :data="data" />
     <img :src="data.img">
     <div :class="$style.contentDescription">
       <div>
